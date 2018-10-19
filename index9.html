@@ -66,6 +66,7 @@ function initNetwork() {
     network.setZoom(1,{x:0,y:0});
     network.setToolTipEnabled(false);
     network.setAsyncZoomAndViewRect(false);
+    network.setScrollBarVisible(0);//滚动条是否可见
     twaver.Styles.setStyle('select.color', '#57ab9a');
     twaver.Styles.setStyle('link.color','#000');
     twaver.Styles.setStyle('link.width', 1);
@@ -103,6 +104,7 @@ function initNetwork() {
     group2.s('label.font', '18px "Microsoft Yahei"');
     group2.s('vector.outline.pattern', [10,5]);
     group2.setStyle('group.deep', 0);
+    group2.setMovable(false);
     box.add(group2);
 /*    node3.setParent(group1);
     node4.setParent(group1);*/
