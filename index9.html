@@ -58,13 +58,14 @@ var height = document.documentElement.clientHeight;
 function init() {
     registerImage()
     initNetwork(); 
+    groupDisplay();//分组不能折叠
 }
 function initNetwork() {
     document.body.appendChild(network.getView());
     network.adjustBounds({ x: 0, y: 0, width: width, height: height });
+    network.setZoom(1,{x:0,y:0});
     network.setToolTipEnabled(false);
-    network.setZoom(0.9,{x:300,y:0});
-    network.setAsyncZoomAndViewRect(true);
+    network.setAsyncZoomAndViewRect(false);
     twaver.Styles.setStyle('select.color', '#57ab9a');
     twaver.Styles.setStyle('link.color','#000');
     twaver.Styles.setStyle('link.width', 1);
@@ -205,7 +206,6 @@ function initNetwork() {
     node5.setName(html4);
     node5.setLocation(400, 450);
     box.add(node5);
-
     var node6 = new twaver.HTMLNode();
     node6.setImage('titleTop')
     node6.setName('<div class="title_text">I区网络安全态势</br>感知采集装置</div>');
@@ -213,6 +213,7 @@ function initNetwork() {
     node6.setStyle('label.position','center');
     node6.setLocation(1000, 245);
     box.add(node6);
+
     var link1 = new twaver.Link(vlan1, node6);
     link1.setStyle('link.type','orthogonal.horizontal');
     link1.setStyle('link.from.position','right.right');
@@ -406,5 +407,8 @@ function registerImage() {
             }
         ]
     });
+}
+function groupDisplay() {
+    twaver.vector.Network.prototype.isDoubleClickToGroupExpand = function () {console.log('不能折叠') };
 }
 </script>
