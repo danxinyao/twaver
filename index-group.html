@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            border:0;
+            padding:0;
+        }
+    </style>
+</head>
+<body  onload="init();">
+</body>
+</html>
+<script src="./js/twaver.js"></script>
+<script>
+function init() {       
+        var box = new twaver.ElementBox();
+        var network = new twaver.vector.Network(box); 
+        document.body.appendChild(network.getView());
+        network.adjustBounds({x:0, y:0, width:1000, height:1000});
+
+        var node1 = new twaver.Node();
+        node1.setName("TWaver");
+        node1.setLocation(100, 100);
+        box.add(node1); 
+
+        var node2 = new twaver.Node();
+        node2.setName("HTML5");
+        node2.setLocation(300, 200);
+        box.add(node2); 
+
+        var node3 = new twaver.Node();
+        node3.setName("HTML5");
+        node3.setLocation(600, 200);
+        box.add(node3); 
+
+        var link = new twaver.Link(node1, node2);
+        link.setName("Hello!");
+        link.setToolTip("<b>Hello!</b>");
+        box.add(link);
+        var group = new twaver.Group(); 
+        group.setExpanded(true);
+        group.setName2('danxinyao-group');
+        group.s('group.fill.color','#ec6c00'); 
+        group.s('whole.alpha',0.5); 
+        group.s('group.shape','rectangle');
+        group.s('group.outline.width',2);
+        group.s('group.outline.color','red');
+        box.add(group);
+        node1.setParent(group);
+        node2.setParent(group);
+/*        group.addChild(node1);
+        group.addChild(node2);*/
+}
+</script>

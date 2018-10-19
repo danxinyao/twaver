@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    * {
+        margin: 0;
+        border: 0;
+        padding: 0;
+    }
+    .danBox {
+        width: 100px;
+        height: 60px;
+        text-align: center;
+    }
+    .danText {
+        width: 100px;
+        height: 50px;
+        word-wrap: break-word;
+    }
+    .left_title {
+        font-weight: bold;
+        font-size:18px;
+        width: 100px;
+        height: 50px;
+        line-height: 50px;
+    }
+    .pop {
+        width: 400px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        font-size:16px;
+        background-color: #A8C0DA;
+        border-radius: 25px;
+    }
+
+    </style>
+</head>
+
+<body onload="init();">
+    <div id="main" style="position:relative;">
+    </div>
+</body>
+
+</html>
+<script src="./js/twaver.js"></script>
+<script>
+var box = new twaver.ElementBox();
+var network = new twaver.vector.Network(box);
+var width = document.documentElement.clientWidth;
+var height = document.documentElement.clientHeight;
+
+function init() {
+    initNetwork();
+    registerImage()
+}
+
+function initNetwork() {
+    document.body.appendChild(network.getView());
+    network.adjustBounds({ x: 0, y: 0, width: width, height: height });
+    twaver.Styles.setStyle('select.color', '#57ab9a');
+    twaver.Styles.setStyle('link.color','#000');
+    twaver.Styles.setStyle('link.width', 1);
+    twaver.Styles.setStyle('link.corner', 'none');
+    var html1 = '<div class="left_title">站控层A网</div>';
+    var html2 = '<div class="left_title">站控层B网</div>';
+    var html3 = '<div class="left_title">站控层C网</div>';
+    var html4 = '<div class="danBox">198.120.0.21-99</br>198.120.0.21-99</br>合计79</br>...</div>';
+    var node1 =  new twaver.HTMLNode();
+    node1.setName(html1);
+    node1.setImage(null)
+    node1.setLocation(100, 0);
+    box.add(node1);
+
+    var node2 =  new twaver.Node();
+    node2.setImage('title');
+    node2.setLocation(200, 50);
+    box.add(node2);
+
+    var node3 = new twaver.Node();
+    node3.setName("198.120.0.11");
+    /*node3.setName2("电源柜");*/
+    node3.setLocation(400, 150);
+    box.add(node3);
+
+    var node4 = new twaver.Node();
+    node4.setName("198.120.0.11");
+    node4.setLocation(500, 150);
+    box.add(node4);
+
+     var link1 = new twaver.Link(node2, node3);
+    link1.setToolTip("<b>Hello!</b>");
+    link1.setStyle('link.type','orthogonal');
+    box.add(link1);
+
+    var link2 = new twaver.Link(node2, node4);
+    link2.setToolTip("<b>Hello!</b>");
+    link2.setStyle('link.type','orthogonal');
+    box.add(link2);
+
+    var node5 =  new twaver.HTMLNode();
+    node5.setName(html2);
+    node5.setImage(null)
+    node5.setLocation(100, 200);
+    box.add(node5);
+
+   var node6 =  new twaver.Node();
+    node6.setImage('title');
+    node6.setLocation(200, 250);
+    box.add(node6);
+
+    var node7 = new twaver.Node();
+    node7.setName("198.120.0.11");
+    node7.setLocation(300, 350);
+    box.add(node7);
+
+    var node8 = new twaver.Node();
+    node8.setName("198.120.0.11");
+    node8.setLocation(500, 350);
+    box.add(node8);
+
+    var link3 = new twaver.Link(node6, node7);
+    box.add(link3);
+
+    var link4 = new twaver.Link(node6, node8);
+    box.add(link4);
+
+    var node9 =  new twaver.HTMLNode();
+    node9.setName(html3);
+    node9.setImage(null)
+    node9.setLocation(100, 400);
+    box.add(node9);
+
+   var node10 =  new twaver.Node();
+    node10.setImage('title');
+    node10.setLocation(200, 450);
+    box.add(node10);
+
+    var node11 = new twaver.Node();
+    node11.setName("198.120.0.11");
+    node11.setLocation(300, 550);
+    box.add(node11);
+
+    var node12 = new twaver.Node();
+    node12.setName("198.120.0.11");
+    node12.setLocation(500, 550);
+    box.add(node12);
+
+    var node13 = new twaver.Node();
+    node13.setName("198.120.0.11");
+    node13.setLocation(600, 550);
+    box.add(node13);
+
+    var node14 = new twaver.Node();
+    node14.setImage("textjson");
+    node14.setName("198.120.0.11");
+    node14.setLocation(800, 550);
+    box.add(node14);
+
+    var node15 = new twaver.HTMLNode();
+    node15.setImage(null)
+    node15.setName(html4);
+    node15.setLocation(700, 470);
+    box.add(node15);
+
+    var node16 = new twaver.HTMLNode();
+    node16.setImage(null)
+    node16.setName(html4);
+    node16.setLocation(400, 470);
+    box.add(node16);
+
+    var node17 = new twaver.Node();
+    node17.setImage("textjson");
+    node17.setName("198.120.0.11");
+    node17.setLocation(1200, 250);
+    box.add(node17);
+
+     var link5 = new twaver.Link(node10, node11);
+    link5.setToolTip("<b>Hello!</b>");
+    box.add(link5);
+
+    var link6 = new twaver.Link(node10, node12);
+    link6.setToolTip("<b>Hello!</b>");
+    box.add(link6);
+
+    var link7 = new twaver.Link(node10, node13);
+    link7.setToolTip("<b>Hello!</b>");
+    box.add(link7);
+
+    var link8 = new twaver.Link(node6, node11);
+    link8.setToolTip("<b>Hello!</b>");
+    box.add(link8);
+
+    var link9 = new twaver.ShapeLink(node10, node14);
+    link9.setToolTip("<b>Hello!</b>");
+    box.add(link9);
+    link9.addPoint({x:810,y:450});
+
+    var link10 = new twaver.Link(node6, node14);
+    link10.setToolTip("<b>Hello!</b>");
+    box.add(link10);
+
+    var link11 = new twaver.Link(node2, node14);
+    link11.setToolTip("<b>Hello!</b>");
+    box.add(link11);
+
+    var link12 = new twaver.Link(node2, node17);
+    link12.setStyle('link.type','orthogonal');
+    link12.setStyle('link.from.position','right')
+    link12.setStyle('link.to.position','left')
+    box.add(link12);
+
+    var link13 = new twaver.Link(node6, node17);
+    link13.setStyle('link.type','orthogonal');
+    link13.setStyle('link.from.position','right')
+    link13.setStyle('link.to.position','left')
+    box.add(link13);
+
+    var link14 = new twaver.Link(node10, node17);
+    link14.setStyle('link.type','orthogonal');
+    link14.setStyle('link.from.position','topright')
+    link14.setStyle('link.to.position','topright')
+    box.add(link14);
+
+    var group = new twaver.Group(); 
+    group.setExpanded(true);
+    group.setName2("电源柜");
+    group.s('group.fill.color','#ec6c00'); 
+    group.s('whole.alpha',0.5); 
+    group.s('group.shape','rectangle');
+    group.s('group.outline.width',2);
+    group.s('group.outline.color','red');
+    group.s('label2.font', '18px "Microsoft Yahei"');
+    box.add(group);
+    node3.setParent(group);
+    node4.setParent(group);
+
+
+/*    var node1 = new twaver.Node();
+    node1.setImage('title');
+    node1.setLocation(500, 10);
+    box.add(node1);
+
+    var node3 = new twaver.Node();
+    node3.setName("HTML51");
+    node3.setImage('rect');
+    node3.setLocation(550, 150);
+    box.add(node3);
+
+    var node2 = new twaver.Node();
+    node2.setName("非控制区交换机");
+    node2.setName2("非控制区交换机");
+    node2.setStyle('label.color','#ef6c00'); 
+    node2.setStyle('label.fill','#ef8200'); 
+    node2.setStyle('label2.position','center');
+    node2.setImage('textjson');
+    node2.setLocation(650, 300);
+    box.add(node2);
+
+    var link1 = new twaver.Link(node1, node3);
+    link1.setToolTip("<b>Hello!</b>");
+    box.add(link1);
+
+    var link = new twaver.Link(node3, node2);
+    link.setName("Hello!");
+    link.setToolTip("<b>Hello!</b>");
+    box.add(link);
+
+    var node4 = new twaver.Node();
+    node4.setName("横向防火墙");
+    node4.setImage('textjson');
+    node4.setLocation(350, 300);
+    box.add(node4);
+
+    var link2 = new twaver.Link(node4, node2);
+    link2.setToolTip("<b>Hello!</b>");
+    box.add(link2);
+
+    var node5= new twaver.Node();
+    node5.setImage('title');
+    node5.setLocation(900, 70);
+    box.add(node5);
+
+    var node6= new twaver.Node();
+    node6.setImage('title');
+    node6.setLocation(900, 250);
+    box.add(node6);
+
+    var node7 = new twaver.Node();
+    node7.setName("横向防火墙2");
+    node7.setImage('textjson');
+    node7.setLocation(50, 300);
+    box.add(node7);
+
+    var link3 = new twaver.ShapeLink(node3, node5);
+    link3.setToolTip("<b>Hello!</b>");
+    box.add(link3);
+    link3.addPoint({x:800,y:100});
+    link3.addPoint({x:800,y:100});
+    link3.s('shapelink.type','orthogonalto');
+    var link4 = new twaver.ShapeLink(node3, node6);
+    link4.setToolTip("<b>Hello!</b>");
+    box.add(link4);
+    link4.addPoint({x:800,y:200});
+    link4.addPoint({x:800,y:325});
+    link4.s('shapelink.type','orthogonalto');
+    var str = '<div class="danBox"><p>ceshiHtml</p><a href="javascript:;">danxinyao</a><div class="danText">保存保存保存保存保存保存保存</div></div>'
+    var str1 = "<div style='width:100px;height:140px;border-radius: 5px 0px 0px 5px;text-align:center;line-height:40px;cursor:pointer;z-index:-10;border: 2px solid #003979;'>198.120.0.100-133</br>198.120.0.100-133</br>198.120.0.100-133</div>"
+    var node8 = new twaver.HTMLNode();
+    node8.setName(str1);
+    node8.setImage(null)
+    node8.setLocation(300, 100);
+    box.add(node8);*/
+}
+
+function registerImage() {
+    /*twaver.Util.registerImageByUrl('./img/beijing.png', 'textjson');*/
+
+        let image = new Image();
+        image.src = './img/beijing.png';
+        image.width = 30;
+        image.height = 30;
+    twaver.Util.registerImage('textjson',image,image.width,image.height);
+    twaver.Util.registerImage('test_vector', {
+        w: 60,
+        h: 40,
+        v: [{
+            shape: 'rect',
+            x: -30,
+            y: -20,
+            w: 60,
+            h: 40,
+            lineColor: 'black',
+            fill: '#309FC9',
+            lineWidth: 1,
+        }]
+    });
+    twaver.Util.registerImage('title', {
+        w: 700,
+        h: 50,
+        origin: { x: 0, y: 0 },
+        cache: false,
+        v: [{
+                shape: 'rect',
+                rel: true,
+                rect: [0, 0, 1, 1],
+                lineColor: '#EC6C00',
+                lineWidth: 1,
+                fill: '#fff',
+                r: 25,
+                visible: true,
+            },
+            /*        {
+                        shape: 'path',
+                        data: 'M0,50l800,0q30,0,30,30l0,30',
+                        lineColor: twaver.Colors.green_dark,
+                        lineWidth: 50,
+                        lineJoint: 'round',
+                    },*/
+            /*         {
+                        shape: 'path',
+                        data: 'M830,100l40,0l-40,30l-40,-30z',
+                        lineColor: '#3084A5',
+                        fill: twaver.Colors.green_dark
+                    }, */
+            {
+                shape: 'text',
+                text: "VLAN1：198.120.0.0/16",
+                x: 200,
+                y: 35,
+                textAlign: 'center',
+                textBaseline: 'bottom',
+                font: '20px "Microsoft Yahei"',
+            }
+        ],
+    });
+    twaver.Util.registerImage('rect', {
+        w: 300,
+        h: 50,
+        origin: { x: 0, y: 0 },
+        cache: false,
+        v: [{
+                shape: 'rect',
+                rel: true,
+                rect: [ 0, 0, 300, 50 ],
+                lineColor: '#C5D7EF',
+                fill: '#C5D7EF',
+                lineWidth: 1,
+            },
+            {
+                shape: 'text',
+                text: "纵向加密装置",
+                x: 150,
+                y: 35,
+                /*fill: 'white',*/
+                textAlign: 'center',
+                textBaseline: 'bottom',
+                font: '20px "Microsoft Yahei"',
+            }
+        ],
+    });
+    twaver.Util.registerImage('circle', {
+        w: 100,
+        h: 100,
+        line: {
+            width: 1,
+            color: '#EC6C00'
+        },
+        v: [{
+                shape: 'circle',
+                cx: 0,
+                cy: 0,
+                r: 50
+            },
+            {
+                shape: 'circle',
+                r: 30,
+                startAngle: 50,
+                endAngle: 130,
+                anticlockwise: false
+            },
+            {
+                shape: 'path',
+                data: 'M-30,-20h15M10,-20h15'
+            }
+        ]
+    });
+}
+</script>

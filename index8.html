@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            border:0;
+            padding:0;
+        }
+    </style>
+</head>
+<body  onload="init();">
+</body>
+</html>
+<script src="./js/twaver.js"></script>
+<script>
+var box = new twaver.ElementBox();
+var network = new twaver.vector.Network(box); 
+registerImage()
+function init() {       
+        document.body.appendChild(network.getView());
+        network.adjustBounds({x:0, y:0, width:1000, height:1000});
+
+        var node1 = new twaver.Node({id:'1'});
+        node1.setName("TWaver");
+        node1.setLocation(100, 100);
+        node1.setClient('dan','123')
+        box.add(node1); 
+
+        var node2 = new twaver.Node();
+        node2.setName("HTML5");
+        node2.setLocation(600, 100);
+        box.add(node2); 
+
+        var node3 = new twaver.Node();
+        node3.setName("HTML100");
+        node3.setImage('img');
+        node3.setLocation(600, 500);
+        box.add(node3); 
+        for(var i = 0; i<5; i++) {
+            var vode = new twaver.Node({id:'sb'+i});
+            var x = 500+i*20;
+            var y = i*80;
+            vode.setName('dan'+i);
+            vode.setImage('img');
+            vode.setLocation(x,y);
+            box.add(vode); 
+            var link = new twaver.Link(node1,vode);
+            link.setName('link'+i);
+            link.setStyle('link.type','orthogonal');
+            box.add(link);
+        
+        }
+
+        var link1 = new twaver.Link(node1, node2);
+        link1.setName("Hello!");
+        link1.setToolTip("<b>Hello!</b>");
+        /*link1.setStyle('link.type','orthogonal');*/
+        link1.setStyle('link.from.position','bottomright');
+        /*link1.setStyle('link.from.xoffset',-10);*/
+        
+        box.add(link1);
+
+        var link2 = new twaver.Link(node1, node3);
+        link2.setName("Hello!");
+        link2.setStyle('link.type','orthogonal');
+        box.add(link2);
+var link3 = new twaver.Link()
+ var from = box.getDataById('sb0');
+var to = box.getDataById('sb1');
+console.log('from',from)
+link3.setFromNode(from);
+link3.setToNode(to);
+box.add(link3);
+        console.log(node1.getClient('dan'))
+        save()
+/*        var datas = new twaver.JsonSerializer(box).serialize();
+        console.log(datas)*/
+}
+function registerImage() {
+        let image = new Image();
+        image.src = './img/beijing.png';
+        image.width = 100;
+        image.height = 50;
+        twaver.Util.registerImage('img',image,image.width,image.height);  
+}
+
+function save() {
+    var boxs = network.getElementBox();
+    console.log('boxs',boxs.getDatas())
+    for ( var i = 0; i < boxs.getDatas().size(); i++) {
+        console.log('dan')
+    }
+}
+</script>

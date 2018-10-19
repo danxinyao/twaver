@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{
+			margin: 0;
+			border:0;
+			padding:0;
+		}
+		.main {
+			width: 500px;
+			height: 500px;
+			border: 1px solid #000;
+			margin: 0 auto;
+		}
+	</style>
+</head>
+
+<body onload="init();">
+<!--         <button onclick="handle_up()">上移</button>
+    <button onclick="handle_down()">下移</button>
+    <button onclick="handle_top()">置顶</button>
+    <button onclick="handle_bottom()">置底</button> -->
+</body>
+
+</html>
+<script src="./js/twaver.js"></script>
+<script>
+    var box, network, node1, node2, node3, node4, link1, link2;
+    function init() {
+      box = new twaver.ElementBox();
+      network = new twaver.canvas.Network(box);
+      
+      document.body.appendChild(network.getView());
+      network.adjustBounds({x:0,y:0,width:document.documentElement.clientWidth,height:document.documentElement.clientHeight});
+      window.onresize = function (e) { 
+          network.adjustBounds({x:0,y:0,width:document.documentElement.clientWidth,height:document.documentElement.clientHeight});
+      };
+      
+      node1 = new twaver.Node();
+      node1.setName('TWaver');
+      node1.setLocation(100, 100);
+      // node1.setImageUrl("./images/element/routerImage.png");
+      node1.setClient('pack', 'pack1')
+      box.add(node1);
+      
+      node2 = new twaver.Node();
+      node2.setName('HTML5');
+      // node2.setImageUrl("./images/element/pcImage.png")
+      node2.setLocation(200, 200);
+      node2.setClient('pack', 'pack1')
+      box.add(node2);
+
+      node3 = new twaver.Node();
+      node3.setName('TWaver');
+      node3.setLocation(300, 300);
+      // node3.setImageUrl("./images/element/routerImage.png");
+      node3.setClient('pack', 'pack3')
+      box.add(node3);
+
+      node4 = new twaver.Node();
+      node4.setName('HTML5');
+      // node4.setImageUrl("./images/element/pcImage.png")
+      node4.setLocation(300, 200);
+      node4.setClient('pack', 'pack3')
+      box.add(node4);
+
+      
+      link1 = new twaver.Link(node1, node2);
+      link1.setName('Hello!');
+      link1.setToolTip('<b>Hello!</b>');
+      link1.setClient('pack', 'pack2');
+      box.add(link1);
+
+      link2 = new twaver.Link(node2, node3);
+      link2.setName('Hello!');
+      link2.setToolTip('<b>Hello!</b>');
+      link2.setClient('pack', 'pack2')
+      box.add(link2);
+
+      packQuickFinder = new twaver.QuickFinder(this.network.getElementBox(), 'pack', 'client');
+
+      selectionModel = box.getSelectionModel();
+      selectionModel.addSelectionChangeListener(function(e){
+
+          console.log(e);
+          var selection = selectionModel.getSelection();
+          if(!selection || selection.size() == 0){
+            return;
+          }
+          var element = selection.get(selection.size()-1);
+          var pack = element.getClient('pack');
+            if(pack){
+              
+              var list = packQuickFinder.find(pack);
+              
+              if(selection){
+                for(var i = 0; i < selection.size(); i++){
+                  var item = selection.get(i);
+                  if(!list.contains(item)){
+                    selectionModel.removeSelection(item);
+                    i--;
+                  }
+                }
+              }
+              list.forEach(function(item){
+                if (!selectionModel.contains(item)) {
+                  selectionModel.appendSelection(item);
+                }
+              }, this)
+            }else{
+              selectionModel.setSelection(element);
+            }
+      });
+    }
+
+</script>

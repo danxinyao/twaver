@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{
+			margin: 0;
+			border:0;
+			padding:0;
+		}
+		.main {
+			width: 500px;
+			height: 500px;
+			border: 1px solid #000;
+			margin: 0 auto;
+		}
+	</style>
+</head>
+
+<body onload="init();">
+    <button onclick="link()">link</button>
+    <button onclick="create()">createElement</button>
+</body>
+
+</html>
+<script src="./js/twaver.js"></script>
+<script>
+var box = new twaver.ElementBox();
+var network;
+var datas;
+
+function init() {
+    initCanvas();
+    initBox();
+}
+
+function create() {
+    console.log('ddd')
+    network.setCreateElementInteractions();
+}
+
+function link() {
+    console.log('link')
+    network.setCreateLinkInteractions()
+    /*        	network.setCreateLinkInteractions(function(fromNode, toNode) {
+            		console.log('fromNode',fromNode)
+            		console.log('toNode',toNode)
+            	});*/
+}
+
+function initCanvas() {
+    network = new twaver.canvas.Network(box);
+    document.body.appendChild(network.getView());
+    network.getView().style.background = '#E9E9E9';
+    network.adjustBounds({ x: 10, y: 30, width: 500, height: 600 });
+}
+
+function initBox() {
+    var from = new twaver.Node();
+    from.setName('From');
+    from.setLocation(Math.random() * 500, Math.random() * 500);
+    box.add(from);
+
+    for (var i = 0; i < 5; i++) {
+        var to = new twaver.Node();
+        to.setName('To');
+        to.setLocation(Math.random() * 500, Math.random() * 600);
+        box.add(to);
+
+        var link = new twaver.Link(from, to);
+        link.setName('Link');
+        box.add(link);
+    }
+    datas = new twaver.JsonSerializer(box).serialize();
+}
+
+function xmlRead() {
+    box.clear();
+    if (datas) {
+        new twaver.JsonSerializer(box).deserialize(datas);
+    }
+    box.forEach(function(data) {
+        if (data instanceof twaver.Link) {
+            data.setStyle('whole.alpha', 0);
+        }
+    })
+}
+</script>
