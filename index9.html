@@ -23,8 +23,10 @@
     .left_title {
         font-weight: bold;
         font-size:18px;
-        width: 100px;
+        width: 50px;
         height: 50px;
+        padding:0;
+        margin:0;
         line-height: 50px;
     }
     .pop {
@@ -78,7 +80,7 @@ function initNetwork() {
     var node1 =  new twaver.HTMLNode();
     node1.setName(html1);
     node1.setImage(null)
-    node1.setLocation(100, 0);
+    node1.setLocation(100, 0.5*height);
     box.add(node1);
 
     var group1 = new twaver.Group({id:'group1'}); 
@@ -105,6 +107,7 @@ function initNetwork() {
     group2.s('vector.outline.pattern', [10,5]);
     group2.setStyle('group.deep', 0);
     group2.setMovable(false);
+    /*group2.setVisible(false);*/
     box.add(group2);
 /*    node3.setParent(group1);
     node4.setParent(group1);*/
@@ -116,13 +119,13 @@ function initNetwork() {
     vlan1.setStyle('label.position','center');
     vlan1.setStyle('label.font','18px arial');
     vlan1.setStyle('label2.position','bottom.bottom');
-    vlan1.setLocation(200, 50);
+    vlan1.setLocation(200,  0.5*height+50);
     box.add(vlan1);
     for(var i=0; i<15; i++) {
         var node = new twaver.Node({id:'vlan1'+i});
         node.setImage('sb2');
         var x = i*60+200;
-        node.setLocation(i*40+200, 150);
+        node.setLocation(i*40+200, 0.5*height+150);
         box.add(node);
         var link = new twaver.Link(node,vlan1);
         link.setStyle('link.to.position','bottomleft');
@@ -133,21 +136,21 @@ function initNetwork() {
     var node2 =  new twaver.HTMLNode();
     node2.setName(html2);
     node2.setImage(null)
-    node2.setLocation(100, 200);
+    node2.setLocation(100, 0.5*height+200);
     box.add(node2);
     var vlan2 =  new twaver.Node({id:'vlan2'});
     vlan2.setImage('vlan');
     vlan2.setName('VLAN2：198.120.0.0/16');
     vlan2.setStyle('label.position','center');
     vlan2.setStyle('label.font','18px arial');
-    vlan2.setLocation(200, 250);
+    vlan2.setLocation(200, 0.5*height+250);
     box.add(vlan2);
 
     for(var i=0; i<5; i++) {
         var node = new twaver.Node({id:'vlan2'+i});
         node.setImage('sb1');
         var x = i*60+200;
-        node.setLocation(i*40+200, 350);
+        node.setLocation(i*40+200, 0.5*height+350);
         box.add(node);
         var link = new twaver.Link(node,vlan2);
         link.setStyle('link.to.position','bottomleft');
@@ -159,21 +162,21 @@ function initNetwork() {
     var node3 =  new twaver.HTMLNode();
     node3.setName(html3);
     node3.setImage(null)
-    node3.setLocation(100, 400);
+    node3.setLocation(100, 0.5*height+400);
     box.add(node3);
     var vlan3 =  new twaver.Node({id:'vlan3'});
     vlan3.setImage('vlan');
     vlan3.setName('VLAN3：198.120.0.0/17');
     vlan3.setStyle('label.position','center');
     vlan3.setStyle('label.font','18px arial');
-    vlan3.setLocation(200, 450);
+    vlan3.setLocation(200, 0.5*height+450);
     box.add(vlan3);
 
     for(var i=0; i<8; i++) {
         var node = new twaver.Node({id:'vlan3'+i});
         var imgType = i>4 ? 'sb1' : 'sb2';
         node.setImage(imgType);
-        node.setLocation(i*80+200, 550);
+        node.setLocation(i*80+200, 0.5*height+550);
         box.add(node);
         if(i>4) {
             node.setParent(group2)
@@ -201,12 +204,12 @@ function initNetwork() {
     var node4 = new twaver.HTMLNode();
     node4.setImage(null)
     node4.setName(html4);
-    node4.setLocation(700, 450);
+    node4.setLocation(700, 0.5*height+450);
     box.add(node4);
     var node5 = new twaver.HTMLNode();
     node5.setImage(null)
     node5.setName(html4);
-    node5.setLocation(400, 450);
+    node5.setLocation(400, 0.5*height+450);
     box.add(node5);
     var node6 = new twaver.HTMLNode();
     node6.setImage('titleTop')
