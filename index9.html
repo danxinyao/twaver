@@ -62,10 +62,99 @@ function init() {
     initNetwork(); 
     groupDisplay();//分组不能折叠
 }
+//创建左上放组
+function creatNode(item) {
+    var node = new twaver.Node(item.id);
+    var group = box.getDataById(item.parent);
+    node.setImage(item.img);
+    node.setName(item.name);
+    node.setName2(item.name2);
+    node.s("label2.position",'center');
+    node.s("label2.font",'18px "Microsoft Yahei"');
+    node.setLocation(item.w, item.h);
+    box.add(node);
+    node.setParent(group)
+}
+//获取元素byid
+function getDataById(id) {
+    var node = box.getDataById(id);
+    return node;
+}
+function creatDDLink(item) {
+    /*var group3 = box.getDataById('group3');*/
+    var link1 = new twaver.Link(getDataById('ddnode1'),getDataById('ddnode2'));
+    box.add(link1);
+    var link2 = new twaver.Link(getDataById('ddnode2'),getDataById('ddnode3'));
+    box.add(link2);
+    var link3 = new twaver.Link(getDataById('ddnode3'),getDataById('ddnode4'));
+    box.add(link3);
+    var link4 = new twaver.Link(getDataById('ddnode4'),getDataById('ddnode5'));
+    box.add(link4);
+    var link5 = new twaver.Link(getDataById('ddnode5'),getDataById('ddvlan1'));
+    link5.setStyle('link.type','orthogonal.horizontal');
+    link5.setStyle('link.from.position','top.top');
+    link5.setStyle('link.split.percent',0);
+    box.add(link5);
+    var link6 = new twaver.Link(getDataById('ddnode5'),getDataById('ddvlan2'));
+    link6.setStyle('link.type','orthogonal.horizontal');
+    link6.setStyle('link.from.position','top.top');
+    link6.setStyle('link.split.percent',0);
+    box.add(link6);
+    var link7 = new twaver.Link(getDataById('ddnode5'),getDataById('node6'));
+    link7.setStyle('link.type','orthogonal.horizontal');
+    link7.setStyle('link.from.position','top.top');
+    link7.setStyle('link.split.percent',0);
+    box.add(link7);
+    var link8 = new twaver.Link(getDataById('ddnode3'),getDataById('ddvlan3'));
+    link8.setStyle('link.type','orthogonal.horizontal');
+    link8.setStyle('link.from.position','topright.topright');
+    link8.setStyle('link.split.percent',0);
+    box.add(link8);
+    var link9 = new twaver.Link(getDataById('ddnode3'),getDataById('ddvlan4'));
+    link9.setStyle('link.type','orthogonal.horizontal');
+    link9.setStyle('link.from.position','topright.topright');
+    link9.setStyle('link.split.percent',0);
+    box.add(link9);
+    //右侧连线
+    var link11 = new twaver.Link(getDataById('totalNode1'),getDataById('totalNode2'));
+    link11.setStyle('link.from.xoffset',25);
+    link11.setStyle('link.to.xoffset',10);
+    box.add(link11);
+    var link22 = new twaver.Link(getDataById('totalNode2'),getDataById('totalVlan1'));
+    link22.setStyle('link.type','orthogonal.horizontal');
+    link22.setStyle('link.from.position','top.top');
+    link22.setStyle('link.split.percent',0);
+    box.add(link22);
+    var link33 = new twaver.Link(getDataById('totalNode2'),getDataById('totalVlan2'));
+    link33.setStyle('link.type','orthogonal.horizontal');
+    link33.setStyle('link.from.position','top.top');
+    link33.setStyle('link.split.percent',0);
+    box.add(link33);
+    var link44 = new twaver.Link(getDataById('totalNode2'),getDataById('totalVlan3'));
+    link44.setStyle('link.type','orthogonal.horizontal');
+    link44.setStyle('link.from.position','top.top');
+    link44.setStyle('link.split.percent',0);
+    box.add(link44);
+    var link55 = new twaver.Link(getDataById('node7'),getDataById('totalVlan1'));
+    link55.setStyle('link.type','orthogonal.horizontal');
+    link55.setStyle('link.from.position','top.top');
+    link55.setStyle('link.split.percent',0);
+    box.add(link55);
+    var link66 = new twaver.Link(getDataById('node7'),getDataById('totalVlan2'));
+    link66.setStyle('link.type','orthogonal.horizontal');
+    link66.setStyle('link.from.position','top.top');
+    link66.setStyle('link.split.percent',0);
+    box.add(link66);
+    var link77 = new twaver.Link(getDataById('node7'),getDataById('totalVlan3'));
+    link77.setStyle('link.type','orthogonal.horizontal');
+    link77.setStyle('link.from.position','top.top');
+    link77.setStyle('link.split.percent',0);
+    box.add(link77);
+}
 function initNetwork() {
     document.body.appendChild(network.getView());
     network.adjustBounds({ x: 0, y: 0, width: width, height: height });
-    network.setZoom(1,{x:0,y:0});
+    network.setZoom(0.9,{x:0,y:0});
     network.setToolTipEnabled(false);
     network.setAsyncZoomAndViewRect(false);
     network.setScrollBarVisible(0);//滚动条是否可见
@@ -77,6 +166,145 @@ function initNetwork() {
     var html2 = '<div class="left_title">站控层B网</div>';
     var html3 = '<div class="left_title">站控层C网</div>';
     var html4 = '<div class="danBox">198.120.0.21-99</br>198.120.0.21-99</br>合计79</br>...</div>';
+
+    /*左上方分区*/
+/*    var ddnode1 = new twaver.Node();
+    ddnode1.setImage("title");
+    ddnode1.setName("调度数据网");
+    ddnode1.s("label.position",'center');
+    ddnode1.s("label.font",'18px "Microsoft Yahei"');
+    ddnode1.setLocation(0.4*width, 10);
+    box.add(ddnode1);*/
+    var nodesData = [
+        {
+            id: 'ddnode1',
+            name: '',
+            name2: '调度数据网',
+            w: 800,
+            h: 30,
+            img: 'title',
+            parent: 'group3'
+        },
+        {
+            id: 'ddnode2',
+            name: '',
+            name2: '调度数据网',
+            w: 800,
+            h: 100,
+            img: 'test_rect',
+            parent: 'group3'
+        },
+        {
+            id: 'ddnode3',
+            name: '调度数据网',
+            name2: null,
+            w: 885,
+            h: 200,
+            img: 'sb1',
+            parent: 'group3'
+        },
+        {
+            id: 'ddnode4',
+            name: '调度数据网',
+            name2: null,
+            w: 785,
+            h: 200,
+            img: 'sb2',
+            parent: 'group3'
+        },
+        {
+            id: 'ddnode5',
+            name: '调度数据网',
+            name2: null,
+            w: 685,
+            h: 200,
+            img: 'sb1',
+            parent: 'group3'
+        },
+       {
+            id: 'ddvlan1',
+            name: null,
+            name2: '调度数据网',
+            w: 200,
+            h: 140,
+            img: 'vlan2',
+            parent: 'group3'
+        },
+        {
+            id: 'ddvlan2',
+            name: null,
+            name2: '调度数据网',
+            w: 200,
+            h: 260,
+            img: 'vlan2',
+            parent: 'group3'
+        },
+       {
+            id: 'ddvlan3',
+            name: null,
+            name2: '调度数据网',
+            w: 1050,
+            h: 140,
+            img: 'vlan2',
+            parent: 'group3'
+        },
+        {
+            id: 'ddvlan4',
+            name: null,
+            name2: '调度数据网',
+            w: 1050,
+            h: 260,
+            img: 'vlan2',
+            parent: 'group3'
+        },
+        {
+            id: 'totalNode1',
+            name: '',
+            name2: '综合业务数据网',
+            w: 1900,
+            h: 30,
+            img: 'title',
+            parent: 'group4'
+        },
+        {
+            id: 'totalNode2',
+            name: '调度数据网',
+            name2: null,
+            w: 2000,
+            h: 250,
+            img: 'sb1',
+            parent: 'group4'
+        },
+       {
+            id: 'totalVlan1',
+            name: null,
+            name2: '调度数据网',
+            w: 1600,
+            h: 150,
+            img: 'vlan2',
+            parent: 'group4'
+        },
+        {
+            id: 'totalVlan2',
+            name: null,
+            name2: '调度数据网',
+            w: 1600,
+            h: 250,
+            img: 'vlan2',
+            parent: 'group4'
+        },
+       {
+            id: 'totalVlan3',
+            name: null,
+            name2: '调度数据网',
+            w: 1600,
+            h: 350,
+            img: 'vlan2',
+            parent: 'group4'
+        }
+    ]
+    
+    /*左下分区*/
     var node1 =  new twaver.HTMLNode();
     node1.setName(html1);
     node1.setImage(null)
@@ -111,6 +339,39 @@ function initNetwork() {
     box.add(group2);
 /*    node3.setParent(group1);
     node4.setParent(group1);*/
+    //左上方组
+    var group3 = new twaver.Group({id:'group3'}); 
+    group3.setExpanded(true);
+    group3.s('group.fill',false); 
+    group3.setImage(null)
+    group3.s('group.padding',20);
+    group3.s('group.fill.color','#ec6c00');
+    group3.s('whole.alpha',0.5); 
+    group3.s('group.shape','rectangle');
+    group3.s('group.outline.width',1);
+    group3.s('group.outline.color','red');
+    group3.s('label.font', '18px "Microsoft Yahei"');
+    group3.s('vector.outline.pattern', [10,5]);
+    group3.setStyle('group.deep', 0);
+    group3.setMovable(false);
+    box.add(group3);
+
+    //右上方组
+    var group4 = new twaver.Group({id:'group4'}); 
+    group4.setExpanded(true);
+    group4.s('group.fill',false); 
+    group4.setImage(null)
+    group4.s('group.padding',20);
+    group4.s('group.fill.color','#ec6c00');
+    group4.s('whole.alpha',0.5); 
+    group4.s('group.shape','rectangle');
+    group4.s('group.outline.width',1);
+    group4.s('group.outline.color','#ccc');
+    group4.s('label.font', '18px "Microsoft Yahei"');
+    group4.s('vector.outline.pattern', [10,5]);
+    group4.setStyle('group.deep', 0);
+    group4.setMovable(false);
+    box.add(group4);
 
     var vlan1 =  new twaver.Node({id:'vlan1'});
     vlan1.setImage('vlan');
@@ -211,13 +472,23 @@ function initNetwork() {
     node5.setName(html4);
     node5.setLocation(400, 0.5*height+450);
     box.add(node5);
-    var node6 = new twaver.HTMLNode();
+    var node6 = new twaver.HTMLNode('node6');
     node6.setImage('titleTop')
     node6.setName('<div class="title_text">I区网络安全态势</br>感知采集装置</div>');
     node6.setStyle('label.font','20px "Microsoft Yahei"');
     node6.setStyle('label.position','center');
-    node6.setLocation(1000, 245);
+    node6.setLocation(850, 300);
     box.add(node6);
+    node6.setParent(group3)
+
+    var node7 = new twaver.HTMLNode('node7');
+    node7.setImage('titleTop')
+    node7.setName('<div class="title_text">III区网络安全态势</br>感知采集装置</div>');
+    node7.setStyle('label.font','20px "Microsoft Yahei"');
+    node7.setStyle('label.position','center');
+    node7.setLocation(1400, 250);
+    box.add(node7);
+    node7.setParent(group4)
 
     var link1 = new twaver.Link(vlan1, node6);
     link1.setStyle('link.type','orthogonal.horizontal');
@@ -232,21 +503,11 @@ function initNetwork() {
     link3.setStyle('link.split.percent',1);
     link3.setStyle('link.type','orthogonal.horizontal');
     box.add(link3);
-/*    var node3 = new twaver.Node();
-    node3.setName("198.120.0.11");
-    /*node3.setName2("电源柜");
-    node3.setLocation(400, 150);
-    box.add(node3);
 
-    var node4 = new twaver.Node();
-    node4.setName("198.120.0.11");
-    node4.setLocation(500, 150);
-    box.add(node4);
-
-     var link1 = new twaver.Link(vlan1, node3);
-    link1.setToolTip("<b>Hello!</b>");
-    link1.setStyle('link.type','orthogonal');
-    box.add(link1);*/
+    nodesData.forEach((item) => {
+        creatNode(item)
+    })
+    creatDDLink();
 }
 
 function registerImage() {
@@ -270,19 +531,24 @@ function registerImage() {
     image4.height = 30;
     image4.src = './img/sb2.png';
     twaver.Util.registerImage('sb2',image4,image4.width,image4.height);
-    twaver.Util.registerImage('test_vector', {
-        w: 60,
-        h: 40,
+    let image5 = new Image();
+    image5.width = 300;
+    image5.height = 40;
+    image5.src = './img/vlan.png';
+    twaver.Util.registerImage('vlan2',image5,image5.width,image5.height);
+    twaver.Util.registerImage('test_rect', {
+        w: 200,
+        h: 50,
+        origin: { x: 0, y: 0 },
         v: [{
-            shape: 'rect',
-            x: -30,
-            y: -20,
-            w: 60,
-            h: 40,
-            lineColor: 'black',
-            fill: '#309FC9',
-            lineWidth: 1,
-        }]
+                shape: 'rect',
+                rel: true,
+                rect: [0, 0, 1, 1],
+                lineColor: '#C5D7EF',
+                lineWidth: 0,
+                fill: '#C5D7EF',
+                visible: true,
+            },]
     });
     twaver.Util.registerImage('titleTop', {
         w: 150,
@@ -323,7 +589,7 @@ function registerImage() {
         ],
     });
     twaver.Util.registerImage('title', {
-        w: 600,
+        w: 200,
         h: 50,
         origin: { x: 0, y: 0 },
         cache: false,
@@ -350,7 +616,7 @@ function registerImage() {
                         lineColor: '#3084A5',
                         fill: twaver.Colors.green_dark
                     }, */
-           {
+/*           {
                 shape: 'text',
                 text: "VLAN1：198.120.0.0/16",
                 x: 200,
@@ -358,7 +624,7 @@ function registerImage() {
                 textAlign: 'center',
                 textBaseline: 'bottom',
                 font: '20px "Microsoft Yahei"',
-            }
+            }*/
         ],
     });
     twaver.Util.registerImage('rect', {

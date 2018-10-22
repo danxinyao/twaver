@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            border:0;
+            padding:0;
+        }
+        body{
+            overflow-y: hidden;
+        }
+    </style>
+</head>
+<body  onload="init();">
+</body>
+</html>
+<script src="./js/twaver.js"></script>
+<script>
+    var width = document.documentElement.clientWidth;
+var height = document.documentElement.clientHeight;
+        var box = new twaver.ElementBox();
+        var network = new twaver.vector.Network(box); 
+function init() {       
+        document.body.appendChild(network.getView());
+        network.adjustBounds({x:0, y:0, width:width, height:height});
+
+/*        var node1 = new twaver.Node();
+        node1.setName("TWaver");
+        node1.setLocation(100, 100);
+        box.add(node1); 
+
+        var node2 = new twaver.Node();
+        node2.setName("HTML5");
+        node2.setLocation(300, 200);
+        box.add(node2); 
+
+        var link = new twaver.Link(node1, node2);
+        link.setName("Hello!");
+        link.setToolTip("<b>Hello!</b>");
+        box.add(link);*/
+        initSafeGroup("safe1","安全I区","I区");
+        initSafeGroup("safe2","安全II区","II区");
+        initSafeGroup("safe3","安全III区","III区");
+        initSafeGroup("safe4","厂站","厂站区");
+}
+function initSafeGroup(safe,name,area) {
+        var safegroup = new twaver.Group(safe);
+        safegroup.setName(name);
+        safegroup.setClient("flag","safe");
+        safegroup.setExpanded(true);
+        box.add(safegroup); 
+        safegroup.s('group.fill.color','red');
+        safegroup.s('group.deep', 0);
+        safegroup.s('group.outline.width', 2);
+        safegroup.s('group.outline.color','red');
+        safegroup.s('select.style', 'none');
+        safegroup.s('label.position', 'topleft.topright');
+        safegroup.s('label.font', '17px "Microsoft Yahei"');
+        safegroup.s('label.color', '#cccccc');
+        safegroup.s('whole.alpha', 1);
+        var safe_node=new twaver.HTMLNode(safe+"_node");
+        var safe_node2=new twaver.HTMLNode(safe+"_node2");
+        safe_node.setName(safe);
+        safe_node.setWidth(24);
+        safe_node.setHeight(24);
+        safe_node.setMovable(false);
+        safe_node.setVisible(true);
+        safe_node.setClient("deviceName",safe);
+        safe_node2.setName(safe);
+        safe_node2.setWidth(24);
+        safe_node2.setHeight(24);
+        safe_node2.setMovable(false);
+        safe_node2.setVisible(true);
+        safe_node2.setClient("deviceName",safe);
+        box.add(safe_node);
+        box.add(safe_node2);
+        safe_node.setParent(safegroup);
+        safe_node2.setParent(safegroup);
+        if(area=="I区"){
+            safegroup.setLocation(0.15*width,0.47*height);  
+            safe_node.setLocation(0.02*width,50);
+            safe_node2.setLocation(0.36*width,0.80*height);
+        }else if(area=="II区"){
+            safegroup.setLocation(0.5*width,0.47*height);   
+            safe_node.setLocation(0.42*width,50);
+            safe_node2.setLocation(0.78*width,0.80*height);
+        }else if(area=="III区"){
+            safegroup.setLocation(0.85*width,0.47*height);  
+            safe_node.setLocation(0.84*width,50);
+            safe_node2.setLocation(0.96*width,0.80*height);
+        }else{
+            safegroup.setLocation(0.15*width,0.88*height);  
+            safe_node.setLocation(0.02*width,0.92*height);
+            safe_node2.setLocation(0.96*width,0.91*height+12);
+        }   
+         network.setMovableFunction(function(element) {
+              if (element instanceof twaver.Group && element.isExpanded()) {
+                  if(element.getClient('flag')=="safe"){
+                      return false;
+                  }
+              }
+              return true;
+         });
+}
+</script>

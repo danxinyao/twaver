@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>数据的批量加载</title>
+    <style>
+        *{
+			margin: 0;
+			border:0;
+			padding:0;
+		}
+		.main {
+			width: 500px;
+			height: 500px;
+			border: 1px solid #000;
+			margin: 0 auto;
+		}
+	</style>
+</head>
+
+<body onload="init();">
+</body>
+
+</html>
+<script src="./js/twaver.js"></script>
+<script>
+ function init() { 
+        var box = new twaver.ElementBox(); 
+        var network = new twaver.vector.Network();  
+        document.body.appendChild(network.getView()); 
+        network.getView().style.background = '#E9E9E9'; 
+        network.adjustBounds({x: 0, y: 0, width: 1300, height: 800}); 
+        console.time("createLink"); 
+        twaver.Styles.setStyle('link.bundle.enable',false); 
+        var from = new twaver.Node({ 
+            name:'from', 
+            location:{x:100, y:100} 
+        }); 
+        box.add(from);
+        box.startBatch(function(){ 
+            for(var i = 0, len = 20; i< len; i++){ 
+                var to = new twaver.Node({ 
+                    name:'to', 
+                    location:{x:Math.random()*1000, y:Math.random()*500} 
+                }); 
+                box.add(to); 
+
+                var link = new twaver.Link(from,to); 
+                box.add(link); 
+            } 
+        });
+        network.setElementBox(box); 
+        console.timeEnd("createLink"); 
+} 
+</script>
