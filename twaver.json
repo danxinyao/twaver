@@ -1,0 +1,663 @@
+//此处的数据为现在的页面生产的数据（页面生成的数据我测了下，大约有20692个字节，请考虑数据库的存储的长度是否合适）
+{
+	"datas": [{
+		"class": "twaver.HTMLNode", //图元类型：1.twaver.HTMLNode -- html文本 2.twaver.Node -- 普通图元（几乎所有的都是这个） 3.twaver.Group -- 分组 4.twaver.Link -- 连线
+		"ref": 0,//默认产生的序号
+		"p": {
+			"name": "<div class=\"left_title\">站控层A网</div>",//图元上方(汉语)名称
+			"image": null,//图元用的图片
+			"location": {
+				"x": 100,//图元的坐标以左上角为（0,0）
+				"y": 321
+			}
+		}
+	}, {
+		"class": "twaver.Group",
+		"ref": 1,
+		"p": {
+			"name": "测控装置",
+			"location": {
+				"x": 359,
+				"y": 874
+			},
+			"expanded": true
+		},
+		"s": {//图元样式
+			"group.fill.color": "#fff",
+			"whole.alpha": 0.5,
+			"group.outline.width": 0,
+			"group.outline.color": "red",
+			"group.deep": 0,
+			"label.font": "18px \"Microsoft Yahei\""
+		}
+	}, {
+		"class": "twaver.Node",
+		"ref": 2,
+		"p": {
+			"parent": 1,//图元的父级（也就是说该图元属于哪个分组，此处为1，它就找到ref：1的图元，上面哪个分组就是他的父级）
+			"image": "sb2",
+			"location": {
+				"x": 200,
+				"y": 871
+			}
+		}
+	}, {
+		"class": "twaver.Node",
+		"ref": 3,
+		"p": {
+			"parent": 1,
+			"image": "sb2",
+			"location": {
+				"x": 280,
+				"y": 871
+			}
+		}
+	}, 
+	 {
+		"class": "twaver.Link",
+		"ref": 90,
+		"p": {
+			"fromNode": 8,//连线起点的ref
+			"toNode": 29//连线终点的ref
+		},
+		"s": {
+			"link.to.position": "bottomleft",//连线终点位置
+			"link.color": "#FE8A05",
+			"link.from.xoffset": -15,//连线起点的偏移量
+			"link.to.xoffset": 400//连线起终点的偏移量
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 91,
+		"p": {
+			"fromNode": 8,
+			"toNode": 61
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.color": "green",
+			"link.from.xoffset": 15,
+			"link.to.xoffset": 430
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 92,
+		"p": {
+			"fromNode": 9,
+			"toNode": 73
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.to.xoffset": 495
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 93,
+		"p": {
+			"fromNode": 9,
+			"toNode": 29
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.color": "#FE8A05",
+			"link.from.xoffset": -15,
+			"link.to.xoffset": 480
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 94,
+		"p": {
+			"fromNode": 9,
+			"toNode": 61
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.color": "green",
+			"link.from.xoffset": 15,
+			"link.to.xoffset": 510
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 95,
+		"p": {
+			"fromNode": 10,
+			"toNode": 73
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.to.xoffset": 575
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 96,
+		"p": {
+			"fromNode": 10,
+			"toNode": 29
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.color": "#FE8A05",
+			"link.from.xoffset": -15,
+			"link.to.xoffset": 560
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 97,
+		"p": {
+			"fromNode": 10,
+			"toNode": 61
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.color": "green",
+			"link.from.xoffset": 15,
+			"link.to.xoffset": 590
+		}
+	}, {
+		"class": "twaver.HTMLNode",
+		"ref": 98,
+		"p": {
+			"name": "<div class=\"danBox\">198.120.0.21-99</br>198.120.0.21-99</br>合计79</br>...</div>",
+			"image": null,
+			"location": {
+				"x": 700,
+				"y": 771
+			}
+		}
+	}, {
+		"class": "twaver.HTMLNode",
+		"ref": 99,
+		"p": {
+			"name": "<div class=\"danBox\">198.120.0.21-99</br>198.120.0.21-99</br>合计79</br>...</div>",
+			"image": null,
+			"location": {
+				"x": 400,
+				"y": 771
+			}
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 100,
+		"p": {
+			"fromNode": 29,
+			"toNode": 12
+		},
+		"s": {
+			"link.type": "orthogonal.horizontal",
+			"link.from.position": "right.right",
+			"link.split.percent": 1
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 101,
+		"p": {
+			"fromNode": 61,
+			"toNode": 12
+		},
+		"s": {
+			"link.type": "orthogonal.horizontal",
+			"link.split.percent": 1
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 102,
+		"p": {
+			"fromNode": 73,
+			"toNode": 12
+		},
+		"s": {
+			"link.split.percent": 1,
+			"link.type": "orthogonal.horizontal"
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 103,
+		"p": {
+			"fromNode": 13,
+			"toNode": 14
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 104,
+		"p": {
+			"fromNode": 14,
+			"toNode": 15
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 105,
+		"p": {
+			"fromNode": 15,
+			"toNode": 16
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 106,
+		"p": {
+			"fromNode": 16,
+			"toNode": 17
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 107,
+		"p": {
+			"fromNode": 17,
+			"toNode": 18
+		},
+		"s": {
+			"link.type": "orthogonal.horizontal",
+			"link.from.position": "top.top",
+			"link.split.percent": 0
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 108,
+		"p": {
+			"fromNode": 17,
+			"toNode": 19
+		},
+		"s": {
+			"link.type": "orthogonal.horizontal",
+			"link.from.position": "top.top",
+			"link.split.percent": 0
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 109,
+		"p": {
+			"fromNode": 17,
+			"toNode": 12
+		},
+		"s": {
+			"link.type": "orthogonal.horizontal",
+			"link.from.position": "top.top",
+			"link.split.percent": 0
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 110,
+		"p": {
+			"fromNode": 15,
+			"toNode": 20
+		},
+		"s": {
+			"link.type": "orthogonal.horizontal",
+			"link.from.position": "topright.topright",
+			"link.split.percent": 0
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 111,
+		"p": {
+			"fromNode": 15,
+			"toNode": 21
+		},
+		"s": {
+			"link.type": "orthogonal.horizontal",
+			"link.from.position": "topright.topright",
+			"link.split.percent": 0
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 112,
+		"p": {
+			"fromNode": 24,
+			"toNode": 25
+		},
+		"s": {
+			"link.from.xoffset": 25,
+			"link.to.xoffset": 10
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 113,
+		"p": {
+			"fromNode": 25,
+			"toNode": 26
+		},
+		"s": {
+			"link.type": "orthogonal.horizontal",
+			"link.from.position": "top.top",
+			"link.split.percent": 0
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 114,
+		"p": {
+			"fromNode": 25,
+			"toNode": 27
+		},
+		"s": {
+			"link.type": "orthogonal.horizontal",
+			"link.from.position": "top.top",
+			"link.split.percent": 0
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 115,
+		"p": {
+			"fromNode": 25,
+			"toNode": 28
+		},
+		"s": {
+			"link.type": "orthogonal.horizontal",
+			"link.from.position": "top.top",
+			"link.split.percent": 0
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 116,
+		"p": {
+			"fromNode": 23,
+			"toNode": 26
+		},
+		"s": {
+			"link.type": "orthogonal.horizontal",
+			"link.from.position": "top.top",
+			"link.split.percent": 0
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 117,
+		"p": {
+			"fromNode": 23,
+			"toNode": 27
+		},
+		"s": {
+			"link.type": "orthogonal.horizontal",
+			"link.from.position": "top.top",
+			"link.split.percent": 0
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 118,
+		"p": {
+			"fromNode": 23,
+			"toNode": 28
+		},
+		"s": {
+			"link.type": "orthogonal.horizontal",
+			"link.from.position": "top.top",
+			"link.split.percent": 0
+		}
+	}, {
+		"class": "twaver.Node",
+		"ref": 119,
+		"p": {
+			"name": "172.16.140.110",
+			"image": "sb2",
+			"location": {
+				"x": 200,
+				"y": 210
+			}
+		},
+		"s": {
+			"label.position": "top"
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 120,
+		"p": {
+			"fromNode": 119,
+			"toNode": 18
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.to.xoffset": 15
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 121,
+		"p": {
+			"fromNode": 119,
+			"toNode": 29
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.color": "#FE8A05",
+			"link.from.xoffset": -15
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 122,
+		"p": {
+			"fromNode": 119,
+			"toNode": 61
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.color": "green",
+			"link.from.xoffset": 15,
+			"link.to.xoffset": 30
+		}
+	}, {
+		"class": "twaver.Node",
+		"ref": 123,
+		"p": {
+			"name": "172.16.140.111",
+			"image": "sb2",
+			"location": {
+				"x": 280,
+				"y": 210
+			}
+		},
+		"s": {
+			"label.position": "bottom"
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 124,
+		"p": {
+			"fromNode": 123,
+			"toNode": 18
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.to.xoffset": 95
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 125,
+		"p": {
+			"fromNode": 123,
+			"toNode": 29
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.color": "#FE8A05",
+			"link.from.xoffset": -15,
+			"link.to.xoffset": 80
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 126,
+		"p": {
+			"fromNode": 123,
+			"toNode": 61
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.color": "green",
+			"link.from.xoffset": 15,
+			"link.to.xoffset": 110
+		}
+	}, {
+		"class": "twaver.Node",
+		"ref": 127,
+		"p": {
+			"name": "172.16.140.112",
+			"image": "sb2",
+			"location": {
+				"x": 360,
+				"y": 210
+			}
+		},
+		"s": {
+			"label.position": "top"
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 128,
+		"p": {
+			"fromNode": 127,
+			"toNode": 18
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.to.xoffset": 175
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 129,
+		"p": {
+			"fromNode": 127,
+			"toNode": 29
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.color": "#FE8A05",
+			"link.from.xoffset": -15,
+			"link.to.xoffset": 160
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 130,
+		"p": {
+			"fromNode": 127,
+			"toNode": 61
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.color": "green",
+			"link.from.xoffset": 15,
+			"link.to.xoffset": 190
+		}
+	}, {
+		"class": "twaver.Node",
+		"ref": 131,
+		"p": {
+			"name": "172.16.140.113",
+			"image": "sb1",
+			"location": {
+				"x": 440,
+				"y": 210
+			}
+		},
+		"s": {
+			"label.position": "bottom"
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 132,
+		"p": {
+			"fromNode": 131,
+			"toNode": 18
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.to.xoffset": 255
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 133,
+		"p": {
+			"fromNode": 131,
+			"toNode": 29
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.color": "#FE8A05",
+			"link.from.xoffset": -15,
+			"link.to.xoffset": 240
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 134,
+		"p": {
+			"fromNode": 131,
+			"toNode": 61
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.color": "green",
+			"link.from.xoffset": 15,
+			"link.to.xoffset": 270
+		}
+	}, {
+		"class": "twaver.Node",
+		"ref": 135,
+		"p": {
+			"name": "172.16.140.110",
+			"image": "sb2",
+			"location": {
+				"x": 1600,
+				"y": 450
+			}
+		},
+		"s": {
+			"label.position": "top"
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 136,
+		"p": {
+			"fromNode": 135,
+			"toNode": 28
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.to.xoffset": 15
+		}
+	}, {
+		"class": "twaver.Node",
+		"ref": 137,
+		"p": {
+			"name": "172.16.140.111",
+			"image": "sb2",
+			"location": {
+				"x": 1680,
+				"y": 450
+			}
+		},
+		"s": {
+			"label.position": "bottom"
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 138,
+		"p": {
+			"name": "三区演示工作站",
+			"fromNode": 137,
+			"toNode": 28
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.to.xoffset": 95
+		}
+	}, {
+		"class": "twaver.Node",
+		"ref": 139,
+		"p": {
+			"name": "172.16.140.112",
+			"image": "sb1",
+			"location": {
+				"x": 1760,
+				"y": 450
+			}
+		},
+		"s": {
+			"label.position": "top"
+		}
+	}, {
+		"class": "twaver.Link",
+		"ref": 140,
+		"p": {
+			"fromNode": 139,
+			"toNode": 28
+		},
+		"s": {
+			"link.to.position": "bottomleft",
+			"link.to.xoffset": 175
+		}
+	}]
+}

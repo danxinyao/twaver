@@ -188,7 +188,7 @@ function initNetwork() {
         {
             id: 'ddnode2',
             name: '',
-            name2: '调度数据网',
+            name2: '纵向加密装置',
             w: 800,
             h: 100,
             img: 'test_rect',
@@ -196,7 +196,7 @@ function initNetwork() {
         },
         {
             id: 'ddnode3',
-            name: '调度数据网',
+            name: '非控制区交换机',
             name2: null,
             w: 885,
             h: 200,
@@ -205,7 +205,7 @@ function initNetwork() {
         },
         {
             id: 'ddnode4',
-            name: '调度数据网',
+            name: '横向防火墙',
             name2: null,
             w: 785,
             h: 200,
@@ -214,7 +214,7 @@ function initNetwork() {
         },
         {
             id: 'ddnode5',
-            name: '调度数据网',
+            name: '控制区交换机',
             name2: null,
             w: 685,
             h: 200,
@@ -268,7 +268,7 @@ function initNetwork() {
         },
         {
             id: 'totalNode2',
-            name: '调度数据网',
+            name: '综合数据网',
             name2: null,
             w: 2000,
             h: 250,
@@ -508,6 +508,58 @@ function initNetwork() {
         creatNode(item)
     })
     creatDDLink();
+    for(var i=0; i<4; i++) {
+        var node = new twaver.Node({id:'vlan4'+i});
+        var imgType = i>2 ? 'sb1' : 'sb2';
+        var labelPosition = i%2 == 0 ? 'top' : 'bottom';
+        node.setImage(imgType);
+        node.setName('172.16.140.11'+i);
+        node.s('label.position',labelPosition);
+        node.setLocation(i*80+200, 210);
+        box.add(node);
+/*        if(i>4) {
+            node.setParent(group2)
+        }else {
+            node.setParent(group1)
+        }*/
+        var link = new twaver.Link(node,getDataById('ddvlan1'));
+        link.setStyle('link.to.position','bottomleft');
+        link.setStyle('link.to.xoffset',i*80 + 15);
+        box.add(link);
+        var link1 = new twaver.Link(node,vlan1);
+        link1.setStyle('link.to.position','bottomleft');
+        link1.setStyle('link.color','#FE8A05');
+        link1.setStyle('link.from.xoffset',-15);
+        link1.setStyle('link.to.xoffset',i*80);
+        box.add(link1);
+        var link2 = new twaver.Link(node,vlan2);
+        link2.setStyle('link.to.position','bottomleft');
+        link2.setStyle('link.color','green');
+        link2.setStyle('link.from.xoffset',15);
+        link2.setStyle('link.to.xoffset',i*80 + 30);
+        box.add(link2);
+    }
+    for(var i=0; i<3; i++) {
+        var node = new twaver.Node({id:'totalSb'+i});
+        var imgType = i>1 ? 'sb1' : 'sb2';
+        var labelPosition = i%2 == 0 ? 'top' : 'bottom';
+        node.setImage(imgType);
+        node.setName('172.16.140.11'+i);
+        node.s('label.position',labelPosition);
+        node.setLocation(i*80+1600, 450);
+        box.add(node);
+        var link = new twaver.Link(node,getDataById('totalVlan3'));
+        link.setStyle('link.to.position','bottomleft');
+        if(i == 1) {
+            link.setName('三区演示工作站') 
+        }
+        link.setStyle('link.to.xoffset',i*80 + 15);
+        box.add(link);
+    }
+    var datas = new twaver.JsonSerializer(box).serialize();
+    console.log('datas',datas)
+    var boxs = network.getElementBox().getDatas();
+    console.log('boxs',boxs)
 }
 
 function registerImage() {
