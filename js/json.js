@@ -12,7 +12,7 @@ var nodes =
 					/*name: '调度数据网',*/
 					name2: '调度数据网',
 					image: 'title',
-					x: 800,
+					x: 700,
 					y: 50,
 					labelPosition: 'bottom.bottom',
 					labelFont: '18px arial',
@@ -219,7 +219,7 @@ var nodes =
 					label2Color: 'green',
 				},
 				{
-					id: 'group1_node50',
+					id: 'group1_htmlNode1',
 					type: 'htmlNode',
 					name: '<div class="title_text">I区网络安全态势</br>感知采集装置</div>',
 					/*name2: '我是name22',*/
@@ -242,7 +242,7 @@ var nodes =
 					/*name: '调度数据网',*/
 					name2: '综合业务数据网',
 					image: 'title',
-					x: 1900,
+					x: 1800,
 					y: 50,
 					labelPosition: 'bottom.bottom',
 					labelFont: '18px arial',
@@ -541,6 +541,7 @@ var nodes =
 		{
 			id:'1',
 			color: 'red',
+			fromPosition: 'bottom.bottom',
 			fromNode: 'group1_node1',
 			toNode: 'group1_node2'
 		},
@@ -610,6 +611,7 @@ var nodes =
 			id:'21',
 			color: 'red',
 			fromXoffset: 65,
+			fromPosition: 'bottom.bottom',
 			fromNode: 'group2_node1',
 			toNode: 'group2_node2'
 		},
@@ -677,8 +679,46 @@ var nodes =
 			fromNode: 'group2_node6',
 			toNode: 'group2_node5'
 		},
+		{
+			id:'28',
+			color: 'blue',
+			type: 'orthogonal.horizontal',
+			fromPosition: 'top.top',
+			toPosition: 'top.top',
+			splitPercent: 0,
+			fromNode: 'group1_htmlNode1',
+			toNode: 'group3_node1'
+		},
+		{
+			id:'29',
+			color: 'blue',
+			type: 'orthogonal.horizontal',
+			fromPosition: 'top.top',
+			toPosition: 'top.top',
+			splitPercent: 0,
+			fromNode: 'group1_htmlNode1',
+			toNode: 'group3_node2'
+		},
+		{
+			id:'30',
+			color: 'blue',
+			type: 'orthogonal.horizontal',
+			fromPosition: 'top.top',
+			toPosition: 'top.top',
+			splitPercent: 0,
+			fromNode: 'group1_htmlNode1',
+			toNode: 'group3_node3'
+		},
+		{
+			id:'31',
+			color: 'blue',
+			type: 'orthogonal.horizontal',
+			fromPosition: 'top.top',
+			toPosition: 'top.top',
+			splitPercent: 0,
+			fromXoffset: -10,
+			fromNode: 'group1_node5',
+			toNode: 'group1_htmlNode1'
+		},
 	]
-}
-function dan() {
-	console.log('dan')
 }

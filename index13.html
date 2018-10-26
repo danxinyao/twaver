@@ -251,7 +251,7 @@ function registerImage() {
         w: 150,
         h: 60,
         origin: { x: 0, y: 0 },
-        cache: false,
+        cache: true,
         v: [{
                 shape: 'rect',
                 rel: true,
@@ -263,20 +263,115 @@ function registerImage() {
             },
         ],
     });
-    twaver.Util.registerImage('title', {
+    twaver.Util.registerImage('title11', {
         w: 200,
         h: 50,
         origin: { x: 0, y: 0 },
-        cache: false,
+        cache: true,
+         line: {
+            width: 1,
+            color: 'green'
+        },
         v: [{
                 shape: 'rect',
                 rel: true,
-                rect: [0, 0, 1, 1],
+                rect: [0, 0, 200, 50],
                 lineColor: '#EC6C00',
                 lineWidth: 1,
                 fill: '#fff',
                 r: 25,
-                visible: true,
+                visible: false,
+            },
+            {
+              shape: 'ellipse',
+              cx: 10,
+              cy: 25,
+              rx: 8,
+              ry: 25,
+              startAngle: 90,
+              endAngle: 270,
+              line: {
+                width: 1,
+                color: 'red'
+              },
+            },
+            {
+              shape: 'ellipse',
+              cx: 180,
+              cy: 25,
+              rx: 8,
+              ry: 25,
+/*              startAngle: 90,
+              endAngle: 270,*/
+              line: {
+                width: 1,
+                color: 'red'
+              },
+            },
+        ],
+    });
+    twaver.Util.registerImage('title3', {
+        w: 400,
+        h: 50,
+        cache: true,
+         line: {
+            width: 1,
+            color: 'green'
+        },
+        v: [
+            {
+              shape: 'path',
+              data: [ { x: -180, y: 25 }, { x: 180, y: 25 } ],
+              lineColor: '#EC6C00',
+            },
+            {
+              shape: 'path',
+              data: [ { x: -180, y: -25 }, { x: 180, y: -25 } ],
+              lineColor: '#EC6C00',
+            },
+            {
+                shape: 'path',
+                data: [ { c: 'M', x: -180, y: 25 }, { c: 'Q', x1: -200, y1: 0, x: -180, y: -25}],
+                lineColor: 'red',
+            },
+            {
+              shape: 'ellipse',
+              cx: 180,
+              cy: 0,
+              rx: 8,
+              ry: 25,
+              line: {
+                width: 1,
+                color: 'red'
+              },
+            },
+        ],
+    });
+    twaver.Util.registerImage('title', {
+        w: 400,
+        h: 50,
+        cache: true,
+         line: {
+            width: 1,
+            color: 'green'
+        },
+        v: [
+            {
+                shape: 'path',
+                data: 'M180,-25H-180,-25M-180,-25Q-200,0,-180,25M-180,25H180,25',
+                lineColor: 'red',
+            },
+            {
+              shape: 'ellipse',
+              cx: 180,
+              cy: 0,
+              rx: 8,
+              ry: 25,
+              //fill: '#fff',
+              line: {
+                width: 1,
+                color: 'red'
+              },
             },
         ],
     });
@@ -284,7 +379,7 @@ function registerImage() {
         w: 300,
         h: 50,
         origin: { x: 0, y: 0 },
-        cache: false,
+        cache: true,
         v: [{
                 shape: 'rect',
                 rel: true,
