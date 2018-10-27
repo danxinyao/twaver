@@ -144,14 +144,24 @@ var nodeMain = {
                                 group1.s('whole.alpha',1); 
                                 group1.s('group.shape','rectangle');
                                 group1.s('group.outline.width',1);
-                                group1.s('label.font', '18px "Microsoft Yahei"');
+                                group1.s('label.font', '16px "Microsoft Yahei"');
                                 group1.s('vector.outline.pattern', [10,5]);
                                 group1.setStyle('group.deep', 1);
-                                group1.setMovable(false);
+                                group1.setMovable(true);
                                 group1.setLocation(xoffset+(index*50), vlanY+150)
                                 box.add(group1);
+                                for(var i = 0; i<vlan_index+1; i++) {
+                                    let vlan = getDataById(nodes.nodes[group_index].childrens[i].id)
+                                    var link = new twaver.Link(group1,vlan);
+                                    link.s('link.color',vlanColor[i])
+                                    link.setStyle('link.to.position','bottomleft.bottomleft');
+                                    link.setStyle('link.from.position','topleft.topleft');
+                                    link.setStyle('link.to.xoffset',i*space+index*50);
+                                    link.s('link.from.xoffset',i*space);
+                                    box.add(link); 
+                                }
                                 let groupXffset = xoffset+(index*50);
-                                let groupXffsetBegin = groupXffset-item.childrens.length*25 + 15;
+                                let groupXffsetBegin = groupXffset-item.childrens.length*25 + 25;
                                 item.childrens.forEach((item, ind) => {
                                     var node =  new twaver.Node();
                                     node.setName(item.name)
@@ -166,9 +176,7 @@ var nodeMain = {
                                 node.setImage(item.image)
                                 node.setLocation(xoffset+(index*50), vlanY+150);
                                 box.add(node);
-                                console.log('vlan_index',vlan_index)
                                 for(var i = 0; i<vlan_index+1; i++) {
-                                    console.log('i',i)
                                     let vlan = getDataById(nodes.nodes[group_index].childrens[i].id)
                                     var link = new twaver.Link(node,vlan);
                                     link.s('link.color',vlanColor[i])

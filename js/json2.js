@@ -34,6 +34,10 @@ var nodes =
 									id: 'group1_vlan1_2_3',
 									image: 'sb1',
 								},
+								{
+									id: 'group1_vlan1_2_4',
+									image: 'sb1',
+								},
 							]
 						},
 						{
