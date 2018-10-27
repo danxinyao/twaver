@@ -12,14 +12,6 @@ var nodes =
 					name: 'VLAN1：198.120.0.0/16',
 					name2: '<div class="left_title">站控层A网</div>',
 					image: 'vlan1',
-					x: 200,
-					y: 650,
-					labelPosition: 'center',
-					labelFont: '18px arial',
-					labelColor: null,
-					label2Position: 'center',
-					label2Font: '24px arial',
-					label2Color: 'green',
 				},
 				{
 					id: 'group1_vlan2',
@@ -27,29 +19,13 @@ var nodes =
 					name: 'VLAN1：198.120.0.0/16',
 					name2: '<div class="left_title">站控层B网</div>',
 					image: 'vlan2',
-					x: 200,
-					y: 650,
-					labelPosition: 'center',
-					labelFont: '18px arial',
-					labelColor: null,
-					label2Position: 'center',
-					label2Font: '24px arial',
-					label2Color: 'green',
 				},
 				{
 					id: 'group1_vlan3',
 					type: 'node',
 					name: 'VLAN3：198.120.0.0/16',
 					name2: '<div class="left_title">站控层C网</div>',
-					image: 'vlan2',
-					x: 200,
-					y: 650,
-					labelPosition: 'center',
-					labelFont: '18px arial',
-					labelColor: null,
-					label2Position: 'center',
-					label2Font: '24px arial',
-					label2Color: 'green',
+					image: 'vlan3',
 					children: [
 						{
 							id: 'group1_vlan3_1',
@@ -83,11 +59,27 @@ var nodes =
 							id: 'group1_vlan3_8',
 							image: 'sb2',
 						},
+						{
+							id: 'group1_vlan3_9',
+							image: 'sb2',
+						},
+						{
+							id: 'group1_vlan3_10',
+							image: 'sb2',
+						},
+						{
+							id: 'group1_vlan3_11',
+							image: 'sb2',
+						},
+						{
+							id: 'group1_vlan3_12',
+							image: 'sb2',
+						},
 					]
 				},
 			]
 		},
-/*		{
+		{
 			groupId: 'group2',
 			outlineWidth: 1,
 			outlineColor: '#ccc',
@@ -96,8 +88,22 @@ var nodes =
 					id: 'group2_vlan1',
 					type: 'node',
 					name: 'VLAN1：198.120.0.0/16',
-					name2: '站控层A网',
+					name2: '<div class="left_title">站控层AA网</div>',
+					image: 'vlan1',
+				},
+				{
+					id: 'group2_vlan2',
+					type: 'node',
+					name: 'VLAN1：198.120.0.0/16',
+					name2: '<div class="left_title">站控层BA网</div>',
 					image: 'vlan2',
+				},
+				{
+					id: 'group2_vlan3',
+					type: 'node',
+					name: 'VLAN1：198.120.0.0/16',
+					name2: '<div class="left_title">站控层BA网</div>',
+					image: 'vlan3',
 					x: 200,
 					y: 650,
 					labelPosition: 'center',
@@ -116,7 +122,7 @@ var nodes =
 					]
 				},
 			]
-		},*/
+		},
 
 	],
 	links: [
