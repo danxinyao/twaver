@@ -58,7 +58,7 @@ var box = new twaver.ElementBox();
 var network = new twaver.vector.Network(box);
 var width = document.documentElement.clientWidth;
 var height = document.documentElement.clientHeight;
-let vlanColor = ['blue','green','red']
+let vlanColor = ['#87C3FF','#00D550','#6D68D5','red','yellow']
 var nodeMain = {
     init: function() {
         registerImage()
@@ -68,7 +68,7 @@ var nodeMain = {
     initNetwork: function() {
         document.body.appendChild(network.getView());
         network.adjustBounds({ x: 0, y: 0, width: width, height: height });
-        network.setZoom(0.9,{x:0,y:0});
+        network.setZoom(0.75,{x:0,y:0});
         network.setToolTipEnabled(false);
         network.setAsyncZoomAndViewRect(false);
         network.setScrollBarVisible(0);//滚动条是否可见
@@ -86,8 +86,8 @@ var nodeMain = {
     },
     creatNodes: function() {
         console.log('node',nodes.nodes)
-        nodes.nodes.forEach((item, index1) => {
-            let xoffset = 200 + index1*800;
+        nodes.nodes.forEach((item, group_index) => {
+            let xoffset = 200 + group_index*800;
             var group = new twaver.Group(item.groupId); 
             group.setExpanded(true);
             group.s('group.fill',false); 
@@ -104,13 +104,13 @@ var nodeMain = {
             group.setMovable(false);
             box.add(group);
             if(item.childrens.length) {
-                item.childrens.forEach((item, index) => {
+                item.childrens.forEach((item, vlan_index) => {
                     var vlan =  new twaver.Node(item.id);
                     vlan.setName(item.name);
                     vlan.setImage(item.image)
                     vlan.setStyle('label.position','center');
                     vlan.s('label.font','24px arial');
-                    let vlanY = 200*(index+1);
+                    let vlanY = 200*(vlan_index+1);
                     vlan.setLocation(xoffset, vlanY);
                     box.add(vlan);
                     vlan.setParent(group)
@@ -118,12 +118,12 @@ var nodeMain = {
                     htmlNode.setName(item.name2);
                     htmlNode.setImage(null)
                     htmlNode.setStyle('label.position','center');
-                    htmlNode.setLocation(100 + index1*800, vlanY);
+                    htmlNode.setLocation(100 + group_index*800, vlanY);
                     box.add(htmlNode);
                     htmlNode.setParent(group);
-                    if(item.children != undefined && item.children.length) {
-                        if(item.children.length>3) {
-                            var group1 = new twaver.Group(); 
+                    if(item.childrens != undefined && item.childrens.length) {
+                        if(item.childrens.length>3) {
+/*                            var group1 = new twaver.Group(); 
                             group1.setExpanded(false);
                             group1.s('group.fill',false); 
                             group1.setName('监测装置')
@@ -138,16 +138,72 @@ var nodeMain = {
                             group1.s('vector.outline.pattern', [10,5]);
                             group1.setStyle('group.deep', 0);
                             group1.setMovable(false);
-                            box.add(group1);
+                            box.add(group1);*/
                         }
-                        item.children.forEach((item, index) => {
-                            if(index<3 || index>7) {
+                        item.childrens.forEach((item, index) => {
+                            let vlanLength = nodes.nodes[group_index].childrens.length;
+                            let space = 15;
+                            if(vlan_index != 0) {
+                                space = 30/vlan_index;
+                            }
+                            console.log('vlanLength',vlanLength)
+                            console.log('space',space)
+                            if(item.childrens != undefined && item.childrens.length) {
+                                var group1 = new twaver.Group(); 
+                                group1.setExpanded(false);
+                                group1.s('group.fill',true); 
+                                group1.setName('监测装置')
+                                group1.setName2('172.16.2822\n23333333')
+                                group1.setImage('sb3')
+                                group1.s('group.padding',20);
+                                group1.s('group.fill.color','#000');
+                                group1.s('whole.alpha',1); 
+                                group1.s('group.shape','rectangle');
+                                group1.s('group.outline.width',1);
+                                group1.s('label.font', '18px "Microsoft Yahei"');
+                                group1.s('vector.outline.pattern', [10,5]);
+                                group1.setStyle('group.deep', 1);
+                                group1.setMovable(false);
+                                group1.setLocation(xoffset+(index*50), vlanY+150)
+                                box.add(group1);
+                                let groupXffset = xoffset+(index*50);
+                                let groupXffsetBegin = groupXffset-item.childrens.length*25 + 15;
+                                item.childrens.forEach((item, ind) => {
+                                    var node =  new twaver.Node();
+                                    node.setName(item.name)
+                                    node.setImage(item.image)
+                                    node.setLocation(groupXffsetBegin+(ind*50), vlanY+150);
+                                    box.add(node);
+                                    node.setParent(group1);
+                                })
+                            }else {
                                 var node =  new twaver.Node(item.id);
                                 node.setName(item.name)
                                 node.setImage(item.image)
-                                node.setLocation(xoffset+(index*50), vlanY+200);
+                                node.setLocation(xoffset+(index*50), vlanY+150);
                                 box.add(node);
-                                let vlan0 = getDataById(nodes.nodes[index1].childrens[0].id)
+                                console.log('vlan_index',vlan_index)
+                                for(var i = 0; i<vlan_index+1; i++) {
+                                    console.log('i',i)
+                                    let vlan = getDataById(nodes.nodes[group_index].childrens[i].id)
+                                    var link = new twaver.Link(node,vlan);
+                                    link.s('link.color',vlanColor[i])
+                                    link.setStyle('link.to.position','bottomleft.bottomleft');
+                                    link.setStyle('link.from.position','topleft.topleft');
+                                    link.setStyle('link.to.xoffset',i*space+index*50);
+                                    link.s('link.from.xoffset',i*space);
+/*                                    link2.s('link.to.xoffset',30 + index*50);
+                                    link2.s('link.from.xoffset',15);*/
+                                    box.add(link); 
+                                }
+/*                                if(vlan_index == 0) {
+                                    var link1 = new twaver.Link(node,vlan);
+                                    link1.s('link.color',vlanColor[0])
+                                    link1.setStyle('link.to.position','bottomleft.bottomleft');
+                                    link1.setStyle('link.to.xoffset',15 + index*50);
+                                    box.add(link1); 
+                                }*/
+/*                                let vlan0 = getDataById(nodes.nodes[group_index].childrens[0].id)
                                 var link0 = new twaver.Link(node,vlan0);
                                 link0.s('link.color',vlanColor[0])
                                 link0.setStyle('link.to.position','bottomleft.bottomleft');
@@ -159,22 +215,49 @@ var nodeMain = {
                                 link1.setStyle('link.to.position','bottomleft.bottomleft');
                                 link1.setStyle('link.to.xoffset',15 + index*50);
                                 box.add(link1);
-                                let vlan1 = getDataById(nodes.nodes[index1].childrens[1].id)
+                                let vlan1 = getDataById(nodes.nodes[group_index].childrens[1].id)
                                 var link2 = new twaver.Link(node,vlan1);
                                 link2.s('link.color',vlanColor[2])
                                 link2.setStyle('link.to.position','bottomleft.bottomleft');
                                 link2.s('link.to.xoffset',30 + index*50);
                                 link2.s('link.from.xoffset',15);
-                                box.add(link2);
+                                box.add(link2);*/
+                            }
+
+                            if(vlan_index ==2 && index<3 || index>7) {
+/*                                var node =  new twaver.Node(item.id);
+                                node.setName(item.name)
+                                node.setImage(item.image)
+                                node.setLocation(xoffset+(index*50), vlanY+200);
+                                box.add(node);
+                                let vlan0 = getDataById(nodes.nodes[group_index].childrens[0].id)
+                                var link0 = new twaver.Link(node,vlan0);
+                                link0.s('link.color',vlanColor[0])
+                                link0.setStyle('link.to.position','bottomleft.bottomleft');
+                                link0.s('link.to.xoffset',index*50);
+                                link0.s('link.from.xoffset',-15);
+                                box.add(link0);
+                                var link1 = new twaver.Link(node,vlan);
+                                link1.s('link.color',vlanColor[1])
+                                link1.setStyle('link.to.position','bottomleft.bottomleft');
+                                link1.setStyle('link.to.xoffset',15 + index*50);
+                                box.add(link1);
+                                let vlan1 = getDataById(nodes.nodes[group_index].childrens[1].id)
+                                var link2 = new twaver.Link(node,vlan1);
+                                link2.s('link.color',vlanColor[2])
+                                link2.setStyle('link.to.position','bottomleft.bottomleft');
+                                link2.s('link.to.xoffset',30 + index*50);
+                                link2.s('link.from.xoffset',15);
+                                box.add(link2);*/
                             }else {
 
-                                var node =  new twaver.Node(item.id);
+/*                                var node =  new twaver.Node(item.id);
                                 node.setName(item.name)
                                 node.setImage(item.image)
                                 node.setLocation(xoffset+(index*50), vlanY+200);
                                 box.add(node);
                                 node.setParent(group1)
-                             let vlan0 = getDataById(nodes.nodes[index1].childrens[0].id)
+                                let vlan0 = getDataById(nodes.nodes[group_index].childrens[0].id)
                                 var link0 = new twaver.Link(node,vlan0);
                                 link0.s('link.color',vlanColor[0])
                                 link0.setStyle('link.to.position','bottomleft.bottomleft');
@@ -186,13 +269,13 @@ var nodeMain = {
                                 link1.setStyle('link.to.position','bottomleft.bottomleft');
                                 link1.setStyle('link.to.xoffset',15 + index*50);
                                 box.add(link1);
-                                let vlan1 = getDataById(nodes.nodes[index1].childrens[1].id)
+                                let vlan1 = getDataById(nodes.nodes[group_index].childrens[1].id)
                                 var link2 = new twaver.Link(node,vlan1);
                                 link2.s('link.color',vlanColor[2])
                                 link2.setStyle('link.to.position','bottomleft.bottomleft');
                                 link2.s('link.to.xoffset',30 + index*50);
                                 link2.s('link.from.xoffset',15);
-                                box.add(link2);
+                                box.add(link2);*/
                             }
                         })
                     }
@@ -340,9 +423,9 @@ function registerImage() {
     image6.src = './css/img/sb2.png';
     twaver.Util.registerImage('vlan2',image6,image6.width,image6.height);
     let image7 = new Image();
-    image7.width = 50;
-    image7.height = 50;
-    image7.src = './css/img/vlan1.png';
+    image7.width = 30;
+    image7.height = 30;
+    image7.src = './css/img/beijing.png';
     twaver.Util.registerImage('sb3',image7,image7.width,image7.height);
     let image8 = new Image();
     image8.width = 600;
