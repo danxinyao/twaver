@@ -58,7 +58,7 @@ var box = new twaver.ElementBox();
 var network = new twaver.vector.Network(box);
 var width = document.documentElement.clientWidth;
 var height = document.documentElement.clientHeight;
-let vlanColor = ['#82B5E3','#82B5E3','#F472A0','#9C6DD6','#D0D76D'];
+let vlanColor = ['#82B5E3','#00D550','#F472A0','#9C6DD6','#D0D76D'];
 var nodeMain = {
     init: function() {
         registerImage()
@@ -68,7 +68,7 @@ var nodeMain = {
     initNetwork: function() {
         document.body.appendChild(network.getView());
         network.adjustBounds({ x: 0, y: 0, width: width, height: height });
-        network.setZoom(0.64,{x:0,y:0});
+        network.setZoom(0.75,{x:0,y:0});
         network.setToolTipEnabled(false);
         network.setAsyncZoomAndViewRect(false);
         network.setScrollBarVisible(0);//滚动条是否可见
@@ -110,7 +110,7 @@ var nodeMain = {
                     vlan.setImage(item.image)
                     vlan.setStyle('label.position','center');
                     vlan.s('label.font','24px arial');
-                    let vlanY = 200*(vlan_index+1);
+                    let vlanY = 230*vlan_index + 50;
                     vlan.setLocation(xoffset, vlanY);
                     box.add(vlan);
                     vlan.setParent(group)
