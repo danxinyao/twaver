@@ -10,7 +10,7 @@ var nodes =
 					id: 'group1_vlan1',//vlan的id唯一标识
 					name: 'VLAN1：198.120.0.0/16', //vlan上面的文字
 					name2: '<div class="left_title">站控层A网</div>',//vlan左侧的文字
-					image: 'vlan1',//vlan用哪个图片渲染
+					image: 'vlan_blue',//vlan用哪个图片渲染
 					childrens: [ //vlan下发挂着的设备个数数组
 						{
 							id: 'group1_vlan1_1',//设备id
@@ -50,7 +50,7 @@ var nodes =
 					id: 'group1_vlan2',
 					name: 'VLAN1：198.120.0.0/16',
 					name2: '<div class="left_title">站控层B网</div>',
-					image: 'vlan2',
+					image: 'vlan_green',
 					childrens: [
 						{
 							id: 'group1_vlan2_1',
@@ -71,7 +71,7 @@ var nodes =
 					type: 'node',
 					name: 'VLAN3：198.120.0.0/16',
 					name2: '<div class="left_title">站控层C网</div>',
-					image: 'vlan3',
+					image: 'vlan_pink',
 					childrens: [
 						{
 							id: 'group1_vlan3_1',
@@ -144,7 +144,7 @@ var nodes =
 					type: 'node',
 					name: 'VLAN1：198.120.0.0/16',
 					name2: '<div class="left_title">站控层B网</div>',
-					image: 'vlan2',
+					image: 'vlan_purple',
 					childrens: [
 						{
 							id: 'group1_vlan4_1',
@@ -165,7 +165,7 @@ var nodes =
 					type: 'node',
 					name: 'VLAN1：198.120.0.0/16',
 					name2: '<div class="left_title">站控层B网</div>',
-					image: 'vlan2',
+					image: 'vlan_yellow',
 					childrens: [
 						{
 							id: 'group1_vlan5_1',

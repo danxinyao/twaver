@@ -58,7 +58,7 @@ var box = new twaver.ElementBox();
 var network = new twaver.vector.Network(box);
 var width = document.documentElement.clientWidth;
 var height = document.documentElement.clientHeight;
-let vlanColor = ['#87C3FF','#00D550','#6D68D5','red','yellow']
+let vlanColor = ['#82B5E3','#82B5E3','#F472A0','#9C6DD6','#D0D76D'];
 var nodeMain = {
     init: function() {
         registerImage()
@@ -68,7 +68,7 @@ var nodeMain = {
     initNetwork: function() {
         document.body.appendChild(network.getView());
         network.adjustBounds({ x: 0, y: 0, width: width, height: height });
-        network.setZoom(0.75,{x:0,y:0});
+        network.setZoom(0.64,{x:0,y:0});
         network.setToolTipEnabled(false);
         network.setAsyncZoomAndViewRect(false);
         network.setScrollBarVisible(0);//滚动条是否可见
@@ -260,6 +260,31 @@ function registerImage() {
     image8.height = 50;
     image8.src = './css/img/vlan1.png';
     twaver.Util.registerImage('vlan3',image8,image8.width,image8.height);
+    let image11 = new Image();
+    image11.width = 600;
+    image11.height = 50;
+    image11.src = './css/img/vlan_blue.png';
+    twaver.Util.registerImage('vlan_blue',image11,image11.width,image11.height);
+    let image12 = new Image();
+    image12.width = 600;
+    image12.height = 50;
+    image12.src = './css/img/vlan_green.png';
+    twaver.Util.registerImage('vlan_green',image12,image12.width,image12.height);
+    let image13 = new Image();
+    image13.width = 600;
+    image13.height = 50;
+    image13.src = './css/img/vlan_pink.png';
+    twaver.Util.registerImage('vlan_pink',image13,image13.width,image13.height);
+    let image14 = new Image();
+    image14.width = 600;
+    image14.height = 50;
+    image14.src = './css/img/vlan_purple.png';
+    twaver.Util.registerImage('vlan_purple',image14,image14.width,image14.height);
+    let image15 = new Image();
+    image15.width = 600;
+    image15.height = 50;
+    image15.src = './css/img/vlan_yellow.png';
+    twaver.Util.registerImage('vlan_yellow',image15,image15.width,image15.height);
     twaver.Util.registerImage('test_rect', {
         w: 200,
         h: 50,
