@@ -80,6 +80,7 @@ var nodeMain = {
         var html2 = '<div class="left_title">站控层B网</div>';
         var html3 = '<div class="left_title">站控层C网</div>';
         var html4 = '<div class="danBox">198.120.0.21-99</br>198.120.0.21-99</br>   合计79</br>...</div>';
+        getAlarmLabel();
         //渲染页面所有节点
         this.creatNodes();
 
@@ -176,6 +177,7 @@ var nodeMain = {
                                 node.setImage(item.image)
                                 node.setLocation(xoffset+(index*50), vlanY+150);
                                 box.add(node);
+                                /*addAlarm("alarm_"+item.id, node.getId(), twaver.AlarmSeverity.CRITICAL, box.getAlarmBox());*/
                                 for(var i = 0; i<vlan_index+1; i++) {
                                     let vlan = getDataById(nodes.nodes[group_index].childrens[i].id)
                                     var link = new twaver.Link(node,vlan);
@@ -200,6 +202,30 @@ var nodeMain = {
         return node;
     }
 }
+//重写告警
+function getAlarmLabel() {
+    network.getInnerColor = function (element) {
+       network.getAlarmLabel = function(element){
+           var severity = element.getAlarmState().getHighestNewAlarmSeverity();
+              if (severity) {
+                  var label = element.getAlarmState().getNewAlarmCount(severity);
+                  console.log('label',label)
+                  if (element.getAlarmState().hasLessSevereNewAlarms()) {
+                      label += "+";
+                  }else {
+                       label = label;
+                  }
+                  return label;
+               }
+               return null;
+       }
+    };
+}
+function addAlarm(alarmID, elementID, alarmSeverity, alarmBox) { 
+  var alarm = new twaver.Alarm(alarmID, elementID, alarmSeverity); 
+  alarmBox.add(alarm); 
+}
+
 function init() {
     nodeMain.init()
 }

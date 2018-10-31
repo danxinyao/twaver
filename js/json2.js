@@ -193,21 +193,21 @@ var nodes =
 					type: 'node',
 					name: 'VLAN1：198.120.0.0/16',
 					name2: '<div class="left_title">站控层AA网</div>',
-					image: 'vlan1',
+					image: 'vlan_blue',
 				},
 				{
 					id: 'group2_vlan2',
 					type: 'node',
 					name: 'VLAN1：198.120.0.0/16',
 					name2: '<div class="left_title">站控层BA网</div>',
-					image: 'vlan2',
+					image: 'vlan_green',
 				},
 				{
 					id: 'group2_vlan3',
 					type: 'node',
 					name: 'VLAN1：198.120.0.0/16',
 					name2: '<div class="left_title">站控层BA网</div>',
-					image: 'vlan3',
+					image: 'vlan_pink',
 					x: 200,
 					y: 650,
 					labelPosition: 'center',
@@ -237,7 +237,7 @@ var nodes =
 					type: 'node',
 					name: 'VLAN1：198.120.0.0/16',
 					name2: '<div class="left_title">站控层AA网</div>',
-					image: 'vlan1',
+					image: 'vlan_blue',
 					childrens: [
 						{
 							id: 'group3_node1_1',
