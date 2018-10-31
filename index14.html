@@ -104,8 +104,8 @@ var nodeMain = {
             group.setStyle('group.deep', 0);
             group.setMovable(false);
             box.add(group);
-            if(item.childrens.length) {
-                item.childrens.forEach((item, vlan_index) => {
+            if(item.children.length) {
+                item.children.forEach((item, vlan_index) => {
                     var vlan =  new twaver.Node(item.id);
                     vlan.setName(item.name);
                     vlan.setImage(item.image)
@@ -122,16 +122,16 @@ var nodeMain = {
                     htmlNode.setLocation(100 + group_index*800, vlanY);
                     box.add(htmlNode);
                     htmlNode.setParent(group);
-                    if(item.childrens != undefined && item.childrens.length) {
-                        item.childrens.forEach((item, index) => {
-                            let vlanLength = nodes.nodes[group_index].childrens.length;
+                    if(item.children != undefined && item.children.length) {
+                        item.children.forEach((item, index) => {
+                            let vlanLength = nodes.nodes[group_index].children.length;
                             let space = 15;
                             if(vlan_index != 0) {
                                 space = 30/vlan_index;
                             }
                             console.log('vlanLength',vlanLength)
                             console.log('space',space)
-                            if(item.childrens != undefined && item.childrens.length) {
+                            if(item.children != undefined && item.children.length) {
                                 var group1 = new twaver.Group(); 
                                 group1.setExpanded(false);
                                 group1.s('group.fill',true); 
@@ -152,7 +152,7 @@ var nodeMain = {
                                 group1.setLocation(xoffset+(index*50), vlanY+150)
                                 box.add(group1);
                                 for(var i = 0; i<vlan_index+1; i++) {
-                                    let vlan = getDataById(nodes.nodes[group_index].childrens[i].id)
+                                    let vlan = getDataById(nodes.nodes[group_index].children[i].id)
                                     var link = new twaver.Link(group1,vlan);
                                     link.s('link.color',vlanColor[i])
                                     link.setStyle('link.to.position','bottomleft.bottomleft');
@@ -162,8 +162,8 @@ var nodeMain = {
                                     box.add(link); 
                                 }
                                 let groupXffset = xoffset+(index*50);
-                                let groupXffsetBegin = groupXffset-item.childrens.length*25 + 25;
-                                item.childrens.forEach((item, ind) => {
+                                let groupXffsetBegin = groupXffset-item.children.length*25 + 25;
+                                item.children.forEach((item, ind) => {
                                     var node =  new twaver.Node();
                                     node.setName(item.name)
                                     node.setImage(item.image)
@@ -179,7 +179,7 @@ var nodeMain = {
                                 box.add(node);
                                 /*addAlarm("alarm_"+item.id, node.getId(), twaver.AlarmSeverity.CRITICAL, box.getAlarmBox());*/
                                 for(var i = 0; i<vlan_index+1; i++) {
-                                    let vlan = getDataById(nodes.nodes[group_index].childrens[i].id)
+                                    let vlan = getDataById(nodes.nodes[group_index].children[i].id)
                                     var link = new twaver.Link(node,vlan);
                                     link.s('link.color',vlanColor[i])
                                     link.setStyle('link.to.position','bottomleft.bottomleft');

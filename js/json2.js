@@ -5,13 +5,13 @@ var nodes =
 			groupId: 'group1',//分区id唯一标识
 			outlineWidth: 1,
 			outlineColor: 'red',
-			childrens: [ //分区下方的vlan个数数组
+			children: [ //分区下方的vlan个数数组
 				{
 					id: 'group1_vlan1',//vlan的id唯一标识
 					name: 'VLAN1：198.120.0.0/16', //vlan上面的文字
 					name2: '<div class="left_title">站控层A网</div>',//vlan左侧的文字
 					image: 'vlan_blue',//vlan用哪个图片渲染
-					childrens: [ //vlan下发挂着的设备个数数组
+					children: [ //vlan下发挂着的设备个数数组
 						{
 							id: 'group1_vlan1_1',//设备id
 							image: 'sb1',//设备用哪个图片渲染
@@ -21,7 +21,7 @@ var nodes =
 							image: 'sb1',//设备分组用哪个图片渲染
 							name: '检查装置',//设备分组下方的文字描述
 							name2: '172.16.2822\n23333333\n...',//设备分组下上方的文字描述
-							childrens: [//设备分组内包含的子设备数组
+							children: [//设备分组内包含的子设备数组
 								{
 									id: 'group1_vlan1_2_1',//设备分组内包含的子设备唯一标识
 									image: 'sb1',//设备分组内包含的子设备用哪个图片渲染
@@ -51,7 +51,7 @@ var nodes =
 					name: 'VLAN1：198.120.0.0/16',
 					name2: '<div class="left_title">站控层B网</div>',
 					image: 'vlan_green',
-					childrens: [
+					children: [
 						{
 							id: 'group1_vlan2_1',
 							image: 'sb1',
@@ -72,7 +72,7 @@ var nodes =
 					name: 'VLAN3：198.120.0.0/16',
 					name2: '<div class="left_title">站控层C网</div>',
 					image: 'vlan_pink',
-					childrens: [
+					children: [
 						{
 							id: 'group1_vlan3_1',
 							image: 'sb1',
@@ -86,7 +86,7 @@ var nodes =
 							image: 'sb1',
 							name: '文字描述',//设备分组下方的文字描述
 							name2: '172.16.2822\n23333333\n...',//设备分组下上方的文字描述
-							childrens: [
+							children: [
 								{
 									id: 'group1_vlan3_4',
 									image: 'sb1',
@@ -145,7 +145,7 @@ var nodes =
 					name: 'VLAN1：198.120.0.0/16',
 					name2: '<div class="left_title">站控层B网</div>',
 					image: 'vlan_purple',
-					childrens: [
+					children: [
 						{
 							id: 'group1_vlan4_1',
 							image: 'sb1',
@@ -166,7 +166,7 @@ var nodes =
 					name: 'VLAN1：198.120.0.0/16',
 					name2: '<div class="left_title">站控层B网</div>',
 					image: 'vlan_yellow',
-					childrens: [
+					children: [
 						{
 							id: 'group1_vlan5_1',
 							image: 'sb1',
@@ -187,7 +187,7 @@ var nodes =
 			groupId: 'group2',
 			outlineWidth: 1,
 			outlineColor: '#ccc',
-			childrens: [
+			children: [
 				{
 					id: 'group2_vlan1',
 					type: 'node',
@@ -216,7 +216,7 @@ var nodes =
 					label2Position: 'center',
 					label2Font: '24px arial',
 					label2Color: 'green',
-					childrens: [
+					children: [
 						{
 							id: 'group2_node1_1',
 							image: 'sb1',
@@ -231,14 +231,14 @@ var nodes =
 			groupId: 'group3',
 			outlineWidth: 1,
 			outlineColor: '#ccc',
-			childrens: [
+			children: [
 				{
 					id: 'group3_vlan1',
 					type: 'node',
 					name: 'VLAN1：198.120.0.0/16',
 					name2: '<div class="left_title">站控层AA网</div>',
 					image: 'vlan_blue',
-					childrens: [
+					children: [
 						{
 							id: 'group3_node1_1',
 							image: 'sb1',
