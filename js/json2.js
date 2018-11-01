@@ -13,6 +13,8 @@ var nodes =
 						{
 							id: 'group1_vlan1_1',//设备id
 							image: 'sb1',//设备用哪个图片渲染
+							name: '172.16.14',
+							links: ['group1_vlan1','group1_vlan2']//该设备连接那个vlan(id组)
 						},
 						{
 							id: 'group1_vlan1_2',//设备需要分组时的唯一标识
@@ -53,6 +55,7 @@ var nodes =
 						{
 							id: 'group1_vlan2_1',
 							image: 'sb1',
+							links: ['group1_vlan1','group1_vlan2']
 						},
 						{
 							id: 'group1_vlan2_2',
@@ -84,6 +87,7 @@ var nodes =
 							image: 'sb1',
 							name: '文字描述',//设备分组下方的文字描述
 							name2: '172.16.2822\n23333333\n...',//设备分组下上方的文字描述
+							links: ['group1_vlan1','group1_vlan2','group1_vlan3','group1_vlan4'],
 							children: [
 								{
 									id: 'group1_vlan3_4',
@@ -122,6 +126,7 @@ var nodes =
 						{
 							id: 'group1_vlan3_9',
 							image: 'sb2',
+							links: ['group1_vlan1','group1_vlan2','group1_vlan3','group1_vlan4']
 						},
 						{
 							id: 'group1_vlan3_10',
@@ -172,6 +177,7 @@ var nodes =
 						{
 							id: 'group1_vlan5_2',
 							image: 'sb1',
+							links: ['group1_vlan1','group1_vlan2']
 						},
 						{
 							id: 'group1_vlan5_3',

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    * {
+        margin: 0;
+        border: 0;
+        padding: 0;
+    }
+    .danBox {
+        width: 100px;
+        height: 60px;
+        text-align: center;
+    }
+    .danText {
+        width: 100px;
+        height: 50px;
+        word-wrap: break-word;
+    }
+    .left_title {
+        font-weight: bold;
+        font-size:18px;
+        width: 80px;
+        height: 50px;
+        padding:0;
+        margin:0;
+        line-height: 50px;
+    }
+    .pop {
+        width: 400px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        font-size:16px;
+        background-color: #A8C0DA;
+        border-radius: 25px;
+    }
+    .title_text {
+        font-size: 18px;
+    }
+    .btn {
+        width: 100px;
+        height: 200px;
+        background-color: #fff;
+        position:fixed;
+        top:0;
+        right:0;
+        z-index: 10000;
+    }
+    </style>
+</head>
+
+<body onload="init();">
+    <div id="main" style="position:relative;">
+<!--         <div class="btn">
+    <a href="javascript:;" class="">danxinwu</a>
+</div> -->
+    </div>
+</body>
+
+</html>
+<script src="./js/jquery-3.3.1.min.js"></script>
+<script src="./js/twaver.js"></script>
+<script src="./js/json2.js"></script>
+<script>
+var box = new twaver.ElementBox();
+var network = new twaver.vector.Network(box);
+var width = document.documentElement.clientWidth;
+var height = document.documentElement.clientHeight;
+let vlanColor = ['#82B5E3','#00D550','#F472A0','#9C6DD6','#D0D76D'];
+var nodeMain = {
+    init: function() {
+        registerImage()
+        this.initNetwork(); 
+        //groupDisplay();//分组不能折叠
+    },
+    initNetwork: function() {
+        var main = document.getElementById('main');
+        main.appendChild(network.getView());
+        /*document.body.appendChild(network.getView());*/
+        network.adjustBounds({ x: 0, y: 0, width: width, height: height });
+        network.setZoom(0.75,{x:0,y:0});
+        network.setToolTipEnabled(false);
+        network.setAsyncZoomAndViewRect(false);
+        network.setScrollBarVisible(0);//滚动条是否可见
+        twaver.Styles.setStyle('select.color', '#57ab9a');
+        twaver.Styles.setStyle('link.color','#000');
+        twaver.Styles.setStyle('link.width', 1);
+        twaver.Styles.setStyle('link.corner', 'none');
+        var html1 = '<div class="left_title">站控层A网</div>';
+        var html2 = '<div class="left_title">站控层B网</div>';
+        var html3 = '<div class="left_title">站控层C网</div>';
+        var html4 = '<div class="danBox">198.120.0.21-99</br>198.120.0.21-99</br>   合计79</br>...</div>';
+        //渲染页面所有节点
+        this.creatNodes();
+        this.creatLinks();
+
+    },
+    creatNodes: function() {
+        console.log('node',nodes.nodes)
+        nodes.nodes.forEach((item, group_index) => {
+            let xoffset = 200 + group_index*800;
+            var group = new twaver.Group(item.groupId); 
+            group.setExpanded(true);
+            group.s('group.fill',false); 
+            group.setImage(null)
+            group.s('group.padding',20);
+            group.s('group.fill.color','#ec6c00');
+            group.s('whole.alpha',0.5); 
+            group.s('group.shape','rectangle');
+            group.s('group.outline.width',1);
+            group.s('group.outline.color','red');
+            group.s('label.font', '18px "Microsoft Yahei"');
+            group.s('vector.outline.pattern', [10,5]);
+            group.setStyle('group.deep', 0);
+            group.setMovable(false);
+            box.add(group);
+            if(item.children.length) {
+                item.children.forEach((item, vlan_index) => {
+                    var vlan =  new twaver.Node(item.id);
+                    vlan.setName(item.name);
+                    vlan.setImage(item.image)
+                    vlan.setStyle('label.position','center');
+                    vlan.s('label.font','24px arial');
+                    vlan.setClient('linkColor',vlanColor[vlan_index])
+                    let vlanY = 230*vlan_index + 50;
+                    vlan.setLocation(xoffset, vlanY);
+                    box.add(vlan);
+                    vlan.setParent(group)
+                    var htmlNode =  new twaver.HTMLNode();
+                    htmlNode.setName(item.name2);
+                    htmlNode.setImage(null)
+                    htmlNode.setStyle('label.position','center');
+                    htmlNode.setLocation(100 + group_index*800, vlanY);
+                    box.add(htmlNode);
+                    htmlNode.setParent(group);
+                    if(item.children != undefined && item.children.length) {
+                        item.children.forEach((item, index) => {
+                            let vlanLength = nodes.nodes[group_index].children.length;
+                            let space = 15;
+                            if(vlan_index != 0) {
+                                space = 30/vlan_index;
+                            }
+                            console.log('vlanLength',vlanLength)
+                            console.log('space',space)
+                            if(item.children != undefined && item.children.length) {
+                                var group1 = new twaver.Group(item.id); 
+                                group1.setExpanded(false);
+                                group1.s('group.fill',true); 
+                                group1.setName(item.name)
+                                group1.setName2(item.name2)
+                                group1.setImage('sb3')
+                                group1.s('group.padding',20);
+                                group1.s('group.fill.color','#000');
+                                group1.s('whole.alpha',1); 
+                                group1.s('group.shape','rectangle');
+                                group1.s('group.outline.width',1);
+                                group1.s('label.font', '16px "Microsoft Yahei"');
+                                group1.s('vector.outline.pattern', [10,5]);
+                                group1.setStyle('group.deep', 1);
+                                group1.setMovable(true);
+                                group1.setLocation(xoffset+(index*50), vlanY+150)
+                                box.add(group1);
+/*                                for(var i = 0; i<vlan_index+1; i++) {
+                                    let vlan = getDataById(nodes.nodes[group_index].children[i].id)
+                                    var link = new twaver.Link(group1,vlan);
+                                    link.s('link.color',vlanColor[i])
+                                    link.setStyle('link.to.position','bottomleft.bottomleft');
+                                    link.setStyle('link.from.position','topleft.topleft');
+                                    link.setStyle('link.to.xoffset',i*space+index*50);
+                                    link.s('link.from.xoffset',i*space);
+                                    box.add(link); 
+                                }*/
+                                let groupXffset = xoffset+(index*50);
+                                let groupXffsetBegin = groupXffset-item.children.length*25 + 25;
+                                item.children.forEach((item, ind) => {
+                                    var node =  new twaver.Node();
+                                    node.setName(item.name)
+                                    node.setImage(item.image)
+                                    node.setLocation(groupXffsetBegin+(ind*50), vlanY+150);
+                                    box.add(node);
+                                    node.setParent(group1);
+                                })
+                            }else {
+                                var node =  new twaver.Node(item.id);
+                                node.setName(item.name)
+                                node.setImage(item.image)
+                                node.setClient('rightClick',true)
+                                node.setLocation(xoffset+(index*50), vlanY+150);
+                                box.add(node);
+/*                                if(item.links != undefined && item.links.length) {
+                                    console.log('caonimei',item.links)
+                                    item.links.forEach((linkItem, linkIndex) => {
+                                        let vlan = getDataById(linkItem);
+                                        let linkColor = vlan.getClient('linkColor');
+                                        console.log(vlan.getClient('linkColor'))
+                                        var link = new twaver.Link(node,vlan);
+                                        link.s('link.color',linkColor)
+                                        link.setStyle('link.to.position','bottomleft.bottomleft');
+                                        link.setStyle('link.from.position','topleft.topleft');
+                                        link.setStyle('link.to.xoffset',linkIndex*space+index*50);
+                                        link.s('link.from.xoffset',linkIndex*space);
+                                        box.add(link); 
+                                    })
+                                }*/
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    },
+    creatLinks: function() {
+        nodes.nodes.forEach((item, group_index) => {
+            let xoffset = 200 + group_index*800;
+            if(item.children.length) {
+                item.children.forEach((item, vlan_index) => {
+                    if(item.children != undefined && item.children.length) {
+                        item.children.forEach((item, index) => {
+                                let node = getDataById(item.id);
+                                if(item.links != undefined && item.links.length) {
+                                    let len = item.links.length;
+                                    let space = 15;
+                                    if(len > 1) {
+                                        space = 30/(len-1);
+                                    }
+                                    console.log('caonimei',item.links)
+                                    item.links.forEach((linkItem, linkIndex) => {
+                                        let vlan = getDataById(linkItem);
+                                        let linkColor = vlan.getClient('linkColor');
+                                        console.log(vlan.getClient('linkColor'))
+                                        var link = new twaver.Link(node,vlan);
+                                        link.s('link.color',linkColor)
+                                        link.setStyle('link.to.position','bottomleft.bottomleft');
+                                        link.setStyle('link.from.position','topleft.topleft');
+                                        link.setStyle('link.to.xoffset',linkIndex*space+index*50);
+                                        link.s('link.from.xoffset',linkIndex*space);
+                                        box.add(link); 
+                                    })
+                                }
+/*                            if(item.children != undefined && item.children.length) {
+                            }else {
+                                let node = getDataById(item.id);
+                                if(item.links != undefined && item.links.length) {
+                                    let len = item.links.length;
+                                    let space = 15;
+                                    if(len > 1) {
+                                        space = 30/(len-1);
+                                    }
+                                    console.log('caonimei',item.links)
+                                    item.links.forEach((linkItem, linkIndex) => {
+                                        let vlan = getDataById(linkItem);
+                                        let linkColor = vlan.getClient('linkColor');
+                                        console.log(vlan.getClient('linkColor'))
+                                        var link = new twaver.Link(node,vlan);
+                                        link.s('link.color',linkColor)
+                                        link.setStyle('link.to.position','bottomleft.bottomleft');
+                                        link.setStyle('link.from.position','topleft.topleft');
+                                        link.setStyle('link.to.xoffset',linkIndex*space+index*50);
+                                        link.s('link.from.xoffset',linkIndex*space);
+                                        box.add(link); 
+                                    })
+                                }
+                            }*/
+                        })
+                    }
+                })
+            }
+        })
+    },
+    //根据id查找图元
+    getDataById: function(id) {
+        var node = box.getDataById(id);
+        return node;
+    }
+}
+function init() {
+    console.time("time")
+    nodeMain.init()
+    console.timeEnd("time")
+}
+//获取元素byid
+function getDataById(id) {
+    var node = box.getDataById(id);
+    return node;
+}
+function registerImage() {
+    let image2 = new Image();
+    image2.width = 600;
+    image2.height = 50;
+    image2.src = './css/img/vlan.png';
+    twaver.Util.registerImage('vlan',image2,image2.width,image2.height);
+    let image3 = new Image();
+    image3.width = 30;
+    image3.height = 30;
+    image3.src = './css/img/sb1.png';
+    twaver.Util.registerImage('sb1',image3,image3.width,image3.height);
+    let image4 = new Image();
+    image4.width = 30;
+    image4.height = 30;
+    image4.src = './css/img/sb2.png';
+    twaver.Util.registerImage('sb2',image4,image4.width,image4.height);
+    let image5 = new Image();
+    image5.width = 600;
+    image5.height = 50;
+    image5.src = './css/img/vlan.png';
+    twaver.Util.registerImage('vlan1',image5,image5.width,image5.height);
+    let image6 = new Image();
+    image6.width = 600;
+    image6.height = 50;
+    image6.src = './css/img/sb2.png';
+    twaver.Util.registerImage('vlan2',image6,image6.width,image6.height);
+    let image7 = new Image();
+    image7.width = 30;
+    image7.height = 30;
+    image7.src = './css/img/beijing.png';
+    twaver.Util.registerImage('sb3',image7,image7.width,image7.height);
+    let image8 = new Image();
+    image8.width = 600;
+    image8.height = 50;
+    image8.src = './css/img/vlan1.png';
+    twaver.Util.registerImage('vlan3',image8,image8.width,image8.height);
+    let image11 = new Image();
+    image11.width = 600;
+    image11.height = 50;
+    image11.src = './css/img/vlan_blue.png';
+    twaver.Util.registerImage('vlan_blue',image11,image11.width,image11.height);
+    let image12 = new Image();
+    image12.width = 600;
+    image12.height = 50;
+    image12.src = './css/img/vlan_green.png';
+    twaver.Util.registerImage('vlan_green',image12,image12.width,image12.height);
+    let image13 = new Image();
+    image13.width = 600;
+    image13.height = 50;
+    image13.src = './css/img/vlan_pink.png';
+    twaver.Util.registerImage('vlan_pink',image13,image13.width,image13.height);
+    let image14 = new Image();
+    image14.width = 600;
+    image14.height = 50;
+    image14.src = './css/img/vlan_purple.png';
+    twaver.Util.registerImage('vlan_purple',image14,image14.width,image14.height);
+    let image15 = new Image();
+    image15.width = 600;
+    image15.height = 50;
+    image15.src = './css/img/vlan_yellow.png';
+    twaver.Util.registerImage('vlan_yellow',image15,image15.width,image15.height);
+    twaver.Util.registerImage('test_rect', {
+        w: 200,
+        h: 50,
+        origin: { x: 0, y: 0 },
+        v: [{
+                shape: 'rect',
+                rel: true,
+                rect: [0, 0, 1, 1],
+                lineColor: '#C5D7EF',
+                lineWidth: 0,
+                fill: '#C5D7EF',
+                visible: true,
+            },]
+    });
+    twaver.Util.registerImage('titleTop', {
+        w: 150,
+        h: 60,
+        origin: { x: 0, y: 0 },
+        cache: true,
+        v: [{
+                shape: 'rect',
+                rel: true,
+                rect: [0, 0, 1, 1],
+                lineColor: '#EC6C00',
+                lineWidth: 1,
+                fill: 'yellow',
+                visible: true,
+            },
+        ],
+    });
+    twaver.Util.registerImage('title11', {
+        w: 200,
+        h: 50,
+        origin: { x: 0, y: 0 },
+        cache: true,
+         line: {
+            width: 1,
+            color: 'green'
+        },
+        v: [{
+                shape: 'rect',
+                rel: true,
+                rect: [0, 0, 200, 50],
+                lineColor: '#EC6C00',
+                lineWidth: 1,
+                fill: '#fff',
+                r: 25,
+                visible: false,
+            },
+            {
+              shape: 'ellipse',
+              cx: 10,
+              cy: 25,
+              rx: 8,
+              ry: 25,
+              startAngle: 90,
+              endAngle: 270,
+              line: {
+                width: 1,
+                color: 'red'
+              },
+            },
+            {
+              shape: 'ellipse',
+              cx: 180,
+              cy: 25,
+              rx: 8,
+              ry: 25,
+/*              startAngle: 90,
+              endAngle: 270,*/
+              line: {
+                width: 1,
+                color: 'red'
+              },
+            },
+        ],
+    });
+    twaver.Util.registerImage('title3', {
+        w: 400,
+        h: 50,
+        cache: true,
+         line: {
+            width: 1,
+            color: 'green'
+        },
+        v: [
+            {
+              shape: 'path',
+              data: [ { x: -180, y: 25 }, { x: 180, y: 25 } ],
+              lineColor: '#EC6C00',
+            },
+            {
+              shape: 'path',
+              data: [ { x: -180, y: -25 }, { x: 180, y: -25 } ],
+              lineColor: '#EC6C00',
+            },
+            {
+                shape: 'path',
+                data: [ { c: 'M', x: -180, y: 25 }, { c: 'Q', x1: -200, y1: 0, x: -180, y: -25}],
+                lineColor: 'red',
+            },
+            {
+              shape: 'ellipse',
+              cx: 180,
+              cy: 0,
+              rx: 8,
+              ry: 25,
+              line: {
+                width: 1,
+                color: 'red'
+              },
+            },
+        ],
+    });
+    twaver.Util.registerImage('title', {
+        w: 400,
+        h: 50,
+        cache: true,
+         line: {
+            width: 1,
+            color: 'green'
+        },
+        v: [
+            {
+                shape: 'path',
+                data: 'M180,-25H-180,-25M-180,-25Q-200,0,-180,25M-180,25H180,25',
+                lineColor: 'red',
+            },
+            {
+              shape: 'ellipse',
+              cx: 180,
+              cy: 0,
+              rx: 8,
+              ry: 25,
+              //fill: '#fff',
+              line: {
+                width: 1,
+                color: 'red'
+              },
+            },
+        ],
+    });
+    twaver.Util.registerImage('rect', {
+        w: 300,
+        h: 50,
+        origin: { x: 0, y: 0 },
+        cache: true,
+        v: [{
+                shape: 'rect',
+                rel: true,
+                rect: [ 0, 0, 300, 50 ],
+                lineColor: '#C5D7EF',
+                fill: '#C5D7EF',
+                lineWidth: 1,
+            },
+            {
+                shape: 'text',
+                text: "纵向加密装置",
+                x: 150,
+                y: 35,
+                /*fill: 'white',*/
+                textAlign: 'center',
+                textBaseline: 'bottom',
+                font: '20px "Microsoft Yahei"',
+            }
+        ],
+    });
+    twaver.Util.registerImage('circle', {
+        w: 100,
+        h: 100,
+        line: {
+            width: 1,
+            color: '#EC6C00'
+        },
+        v: [{
+                shape: 'circle',
+                cx: 0,
+                cy: 0,
+                r: 50
+            },
+            {
+                shape: 'circle',
+                r: 30,
+                startAngle: 50,
+                endAngle: 130,
+                anticlockwise: false
+            },
+            {
+                shape: 'path',
+                data: 'M-30,-20h15M10,-20h15'
+            }
+        ]
+    });
+}
+function groupDisplay() {
+    twaver.vector.Network.prototype.isDoubleClickToGroupExpand = function () {console.log('不能折叠') };
+}
+</script>
