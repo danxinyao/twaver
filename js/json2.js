@@ -3,8 +3,6 @@ var nodes =
 	nodes: [
 		{
 			groupId: 'group1',//分区id唯一标识
-			outlineWidth: 1,
-			outlineColor: 'red',
 			children: [ //分区下方的vlan个数数组
 				{
 					id: 'group1_vlan1',//vlan的id唯一标识
