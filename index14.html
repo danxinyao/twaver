@@ -232,6 +232,7 @@ var nodeMain = {
                                 node.setClient('rightClick',true)
                                 node.setLocation(xoffset+(index*50), vlanY+150);
                                 box.add(node);
+                                node.getAlarmState().setNewAlarmCount(twaver.AlarmSeverity.MAJOR,100);
                                 /*addAlarm("alarm_"+item.id, node.getId(), twaver.AlarmSeverity.CRITICAL, box.getAlarmBox());*/
                                 for(var i = 0; i<vlan_index+1; i++) {
                                     let vlan = getDataById(nodes.nodes[group_index].children[i].id)

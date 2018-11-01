@@ -41,11 +41,23 @@
     .title_text {
         font-size: 18px;
     }
+    .btn {
+        width: 100px;
+        height: 200px;
+        background-color: #fff;
+        position:fixed;
+        top:0;
+        right:0;
+        z-index: 10000;
+    }
     </style>
 </head>
 
 <body onload="init();">
     <div id="main" style="position:relative;">
+<!--         <div class="btn">
+    <a href="javascript:;" class="">danxinwu</a>
+</div> -->
     </div>
 </body>
 
@@ -59,7 +71,6 @@ var network = new twaver.vector.Network(box);
 var width = document.documentElement.clientWidth;
 var height = document.documentElement.clientHeight;
 let vlanColor = ['#82B5E3','#00D550','#F472A0','#9C6DD6','#D0D76D'];
-var popupMenu = new twaver.controls.PopupMenu(network);
 var nodeMain = {
     init: function() {
         registerImage()
@@ -67,7 +78,9 @@ var nodeMain = {
         //groupDisplay();//分组不能折叠
     },
     initNetwork: function() {
-        document.body.appendChild(network.getView());
+        var main = document.getElementById('main');
+        main.appendChild(network.getView());
+        /*document.body.appendChild(network.getView());*/
         network.adjustBounds({ x: 0, y: 0, width: width, height: height });
         network.setZoom(0.75,{x:0,y:0});
         network.setToolTipEnabled(false);
@@ -81,63 +94,9 @@ var nodeMain = {
         var html2 = '<div class="left_title">站控层B网</div>';
         var html3 = '<div class="left_title">站控层C网</div>';
         var html4 = '<div class="danBox">198.120.0.21-99</br>198.120.0.21-99</br>   合计79</br>...</div>';
-        getAlarmLabel();
         //渲染页面所有节点
         this.creatNodes();
-        this.creatPopMenu()
 
-    },
-    creatPopMenu: function() {
-        // 最后选中的节点和位置
-        var lastData, lastPoint;
-        popupMenu.onMenuShowing = function(e) {
-            lastData = network.getSelectionModel().getLastData();
-            lastPoint = network.getLogicalPoint(e);
-            console.log(lastData,lastPoint)
-            return true;
-        };
-        popupMenu.setMenuItems([
-            { label: '添加设备' ,group: 'Group', },
-            { label: '删除设备', group: 'Element' },
-        ]);
-        popupMenu.onAction = function(menuItem) {
-            console.log(menuItem)
-            // 在指定位置添加网元
-            if (menuItem.label == "添加设备") {
-                var node = new twaver.Node();
-                node.setName("newNode");
-                node.setCenterLocation(lastPoint);
-                box.add(node);
-            }
-            // 删除节点或者链路
-            if (menuItem.label == "删除设备") {
-                box.remove(lastData);
-            }
-        };
-        // 设置右键菜单是否可见
-        popupMenu.isVisible = function(menuItem) {
-            if (lastData) {
-                console.log(lastData.getClient('rightClick'))
-                if(lastData.getClient('rightClick')) {
-                    return true
-                }
-/*                if ( lastData instanceof twaver.SubNetwork && menuItem.group === 'SubNetwork') {
-                    console.log('SubNetwork')
-                    return true;
-                }
-                if ( lastData instanceof twaver.Group && menuItem.group === 'Group') {
-                    console.log('Group')
-                    return true;
-                }
-                if ( lastData instanceof twaver.Link && menuItem.group === 'Link') {
-                    console.log('Link')
-                    return true;
-                }*/
-                /*return menuItem.group === 'Element';*/
-            } else {
-                return menuItem.group === 'none';
-            }
-        };
     },
     creatNodes: function() {
         console.log('node',nodes.nodes)
@@ -232,7 +191,6 @@ var nodeMain = {
                                 node.setClient('rightClick',true)
                                 node.setLocation(xoffset+(index*50), vlanY+150);
                                 box.add(node);
-                                /*addAlarm("alarm_"+item.id, node.getId(), twaver.AlarmSeverity.CRITICAL, box.getAlarmBox());*/
                                 for(var i = 0; i<vlan_index+1; i++) {
                                     let vlan = getDataById(nodes.nodes[group_index].children[i].id)
                                     var link = new twaver.Link(node,vlan);
@@ -257,54 +215,16 @@ var nodeMain = {
         return node;
     }
 }
-//重写告警
-function getAlarmLabel() {
-    network.getInnerColor = function (element) {
-       network.getAlarmLabel = function(element){
-           var severity = element.getAlarmState().getHighestNewAlarmSeverity();
-              if (severity) {
-                  var label = element.getAlarmState().getNewAlarmCount(severity);
-                  console.log('label',label)
-                  if (element.getAlarmState().hasLessSevereNewAlarms()) {
-                      label += "+";
-                  }else {
-                       label = label;
-                  }
-                  return label;
-               }
-               return null;
-       }
-    };
-}
-function addAlarm(alarmID, elementID, alarmSeverity, alarmBox) { 
-  var alarm = new twaver.Alarm(alarmID, elementID, alarmSeverity); 
-  alarmBox.add(alarm); 
-}
-
 function init() {
+    console.time("time")
     nodeMain.init()
+    console.timeEnd("time")
 }
 //获取元素byid
 function getDataById(id) {
     var node = box.getDataById(id);
     return node;
 }
-function initNetwork() {
-    document.body.appendChild(network.getView());
-    network.adjustBounds({ x: 0, y: 0, width: width, height: height });
-    network.setZoom(0.9,{x:0,y:0});
-    network.setToolTipEnabled(false);
-    network.setAsyncZoomAndViewRect(false);
-    network.setScrollBarVisible(0);//滚动条是否可见
-    twaver.Styles.setStyle('select.color', '#57ab9a');
-    twaver.Styles.setStyle('link.color','#000');
-    twaver.Styles.setStyle('link.width', 1);
-    twaver.Styles.setStyle('link.corner', 'none');
-
-    
-
-}
-
 function registerImage() {
     let image2 = new Image();
     image2.width = 600;
@@ -562,6 +482,5 @@ function registerImage() {
 }
 function groupDisplay() {
     twaver.vector.Network.prototype.isDoubleClickToGroupExpand = function () {console.log('不能折叠') };
-    /*network.moveSelectedElements = function(){}*/
 }
 </script>
