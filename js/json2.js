@@ -8,11 +8,11 @@ var nodes =
 					id: 'group1_vlan1',//vlan的id唯一标识
 					name: 'VLAN1：198.120.0.0/16', //vlan上面的文字
 					name2: '<div class="left_title">站控层A网</div>',//vlan左侧的文字
-					image: 'vlan_blue',//vlan用哪个图片渲染
+					image: 'vlan_blue',//vlan用哪个图片渲染 
 					children: [ //vlan下发挂着的设备个数数组
 						{
 							id: 'group1_vlan1_1',//设备id
-							image: 'sb1',//设备用哪个图片渲染
+							deviceCode: 'sb1',//设备用哪个图片渲染//设备类型
 							name: '172.16.14',
 							links: ['group1_vlan1','group1_vlan2']//该设备连接那个vlan(id组)
 						},
@@ -90,15 +90,15 @@ var nodes =
 							links: ['group1_vlan1','group1_vlan2','group1_vlan3','group1_vlan4'],
 							children: [
 								{
-									id: 'group1_vlan3_4',
+									id: 'group1_vlan3_41',
 									image: 'sb1',
 								},
 								{
-									id: 'group1_vlan3_4',
+									id: 'group1_vlan3_42',
 									image: 'sb1',
 								},
 								{
-									id: 'group1_vlan3_4',
+									id: 'group1_vlan3_43',
 									image: 'sb1',
 								},
 							]
