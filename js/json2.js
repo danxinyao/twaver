@@ -55,15 +55,21 @@ var nodes =
 						{
 							id: 'group1_vlan2_1',
 							image: 'sb1',
+							alarmType: '1',
+							alarmData: '100',
 							links: ['group1_vlan1','group1_vlan2']
 						},
 						{
 							id: 'group1_vlan2_2',
 							image: 'sb1',
+							alarmType: '2',
+							alarmData: '50',
 						},
 						{
 							id: 'group1_vlan2_3',
 							image: 'sb2',
+							alarmType: '3',
+							alarmData: '55',
 						},
 					]
 				},

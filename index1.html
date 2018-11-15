@@ -32,12 +32,16 @@ function init() {
 
         var node2 = new twaver.Node();
         node2.setName("HTML5");
-        node2.setLocation(300, 200);
+        node2.setLocation(100, 400);
         box.add(node2); 
 
         var link = new twaver.Link(node1, node2);
-        link.setName("Hello!");
-        link.setToolTip("<b>Hello!</b>");
+        link.s('link.type','orthogonal.V.H')
+        /*link.setStyle('link.split.percent',0);*/
+        link.setStyle('link.from.position','right.left');
+        link.setStyle('link.from.xoffset',10);
+/*        link.setStyle('link.to.position','bottomleft.bottomleft');
+        link.setStyle('link.to.xoffset',10);*/
         box.add(link);
 }
 </script>

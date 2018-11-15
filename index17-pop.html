@@ -14,6 +14,7 @@
         width: 100px;
         height: 60px;
         text-align: center;
+        
     }
     .danText {
         width: 100px;
@@ -41,23 +42,56 @@
     .title_text {
         font-size: 18px;
     }
-    .btn {
-        width: 100px;
-        height: 200px;
-        background-color: #fff;
-        position:fixed;
-        top:0;
-        right:0;
-        z-index: 10000;
-    }
+.dialog{
+    width: 250px;
+    height: 180px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    position: absolute;
+    background-color: rgba(0,0,0,0.8);
+}
+ .table2{
+     border: 0px solid #BEBEBE;
+     margin-left: 5px;
+     margin-right: 5px;
+     width: 95%;
+     height:80px;
+     overflow:auto;
+     font-size:13px;
+     color:#dee9f3;
+ }
+ .table1{
+     margin: 0 5px 5px 5px;
+     width: 240px;
+     border-bottom: 1px solid #DDB958;
+     padding-bottom: 6px;
+ }
+ .img_table tr{
+     height:18px;
+ }
+ .table1 td{
+     font-family:'Calibri', 'Open Sans',sans-serif;
+     font-size: 14px;
+ }
+ .table1 .td1{
+     width: 55px;
+     text-align:right;
+ }
+  .table1 .td2{
+    color:#dee9f3;
+ }
+ .td2{
+   color:#dee9f3;
+ }
+ .td1{
+     color: #E09E00;
+     font-weight: bold;
+ }
     </style>
 </head>
 
 <body onload="init();">
     <div id="main" style="position:relative;">
-<!--         <div class="btn">
-    <a href="javascript:;" class="">danxinwu</a>
-</div> -->
     </div>
 </body>
 
@@ -71,6 +105,8 @@ var network = new twaver.vector.Network(box);
 var width = document.documentElement.clientWidth;
 var height = document.documentElement.clientHeight;
 let vlanColor = ['#82B5E3','#00D550','#F472A0','#9C6DD6','#D0D76D'];
+var popupMenu = new twaver.controls.PopupMenu(network);
+var dialog;
 var nodeMain = {
     init: function() {
         registerImage()
@@ -78,28 +114,136 @@ var nodeMain = {
         //groupDisplay();//分组不能折叠
     },
     initNetwork: function() {
-        var main = document.getElementById('main');
-        main.appendChild(network.getView());
-        /*document.body.appendChild(network.getView());*/
+        document.body.appendChild(network.getView());
         network.adjustBounds({ x: 0, y: 0, width: width, height: height });
-        network.setZoom(0.75,{x:0,y:0});
+        network.setZoom(1,{x:0,y:0});
         network.setToolTipEnabled(false);
         network.setAsyncZoomAndViewRect(false);
         network.setScrollBarVisible(0);//滚动条是否可见
-        network.setLinkFlowEnabled(true);
-network.setLinkFlowInterval(100);
         twaver.Styles.setStyle('select.color', '#57ab9a');
         twaver.Styles.setStyle('link.color','#000');
         twaver.Styles.setStyle('link.width', 1);
         twaver.Styles.setStyle('link.corner', 'none');
+        twaver.Styles.setStyle('alarm.position', 'topright');
+        twaver.Styles.setStyle('alarm.pointer.length', '0');
         var html1 = '<div class="left_title">站控层A网</div>';
         var html2 = '<div class="left_title">站控层B网</div>';
         var html3 = '<div class="left_title">站控层C网</div>';
         var html4 = '<div class="danBox">198.120.0.21-99</br>198.120.0.21-99</br>   合计79</br>...</div>';
+        getAlarmLabel();
         //渲染页面所有节点
         this.creatNodes();
-        this.creatLinks();
+        this.creatPopMenu()
+        dialog = this.initDialog();
+        this.addInteractionListener()//
 
+    },
+    initAlarm: function() {
+         twaver.AlarmSeverity.CRITICAL = twaver.AlarmSeverity.add(500,'Critical','C',"#ff3333");
+         twaver.AlarmSeverity.MAJOR = twaver.AlarmSeverity.add(400,'MAJOR','C',"#e6e6e6");
+         twaver.AlarmSeverity.WARNING  = twaver.AlarmSeverity.add(200,'WARNING','C',"#66ff99");
+    },
+    addInteractionListener: function() {
+        network.addInteractionListener(function(e){
+            console.log(e)
+            dialog.style.display = 'none';
+            if(e.kind == 'clickElement') {
+                    var a=e.element._location.x;
+                    var b;
+                    setTimeout(function(){
+                        var nodex=box.getDataById(e.element._id);
+                        var b=nodex._location.x;
+                        if(Math.abs(a-b)<2){
+                            var mac=e.element._clientMap.mac;
+                            var devicename=e.element._id;
+                            /*var devicename=e.element._clientMap.deviceName;*/
+                            var idTxt = document.getElementById('id');
+                            $(idTxt).prev().text("名称：");
+                            idTxt.innerHTML = devicename;
+                            var nameTxt = document.getElementById('name');
+                            $(nameTxt).prev().text("MAC：");
+                            nameTxt.innerHTML = mac;
+                            var cpuTxt = document.getElementById('cpu');
+                            var menTxt = document.getElementById('men');
+                            cpuTxt.innerHTML = "高可以";
+                            menTxt.innerHTML = "-";
+                            var warning1Txt = document.getElementById('warning1');
+                            var warning2Txt = document.getElementById('warning2');
+                            warning1Txt.innerHTML='暂无数据';
+                            warning2Txt.innerHTML='';
+                            var s = dialog.style;
+                            s.display = 'block';  
+                            var height1=document.documentElement.clientHeight;
+                            var height2=e.event.clientY;
+                            var width1=document.documentElement.clientWidth;
+                            var width2=e.event.clientX;
+                            if(height1-height2>150){              
+                                    s.top = e.event.clientY+10+'px';   
+                             }else{
+                                    s.top = e.event.clientY-150+'px'; 
+                             } 
+                            if(width1-width2>242){              
+                                    s.left = e.event.clientX+10+'px';  
+                            }else{
+                                    s.left = e.event.clientX-242+'px';
+                            }
+                        }
+                    },200);
+                    return;
+            }
+        })
+    },
+    creatPopMenu: function() {
+        // 最后选中的节点和位置
+        var lastData, lastPoint;
+        popupMenu.onMenuShowing = function(e) {
+            lastData = network.getSelectionModel().getLastData();
+            lastPoint = network.getLogicalPoint(e);
+            console.log(lastData,lastPoint)
+            return true;
+        };
+        popupMenu.setMenuItems([
+            { label: '添加设备' ,group: 'Group', },
+            { label: '删除设备', group: 'Element' },
+        ]);
+        popupMenu.onAction = function(menuItem) {
+            console.log(menuItem)
+            // 在指定位置添加网元
+            if (menuItem.label == "添加设备") {
+                var node = new twaver.Node();
+                node.setName("newNode");
+                node.setCenterLocation(lastPoint);
+                box.add(node);
+            }
+            // 删除节点或者链路
+            if (menuItem.label == "删除设备") {
+                box.remove(lastData);
+            }
+        };
+        // 设置右键菜单是否可见
+        popupMenu.isVisible = function(menuItem) {
+            if (lastData) {
+                console.log(lastData.getClient('rightClick'))
+                if(lastData.getClient('rightClick')) {
+                    return true
+                }
+/*                if ( lastData instanceof twaver.SubNetwork && menuItem.group === 'SubNetwork') {
+                    console.log('SubNetwork')
+                    return true;
+                }
+                if ( lastData instanceof twaver.Group && menuItem.group === 'Group') {
+                    console.log('Group')
+                    return true;
+                }
+                if ( lastData instanceof twaver.Link && menuItem.group === 'Link') {
+                    console.log('Link')
+                    return true;
+                }*/
+                /*return menuItem.group === 'Element';*/
+            } else {
+                return menuItem.group === 'none';
+            }
+        };
     },
     creatNodes: function() {
         console.log('node',nodes.nodes)
@@ -127,7 +271,6 @@ network.setLinkFlowInterval(100);
                     vlan.setImage(item.image)
                     vlan.setStyle('label.position','center');
                     vlan.s('label.font','24px arial');
-                    vlan.setClient('linkColor',vlanColor[vlan_index])
                     let vlanY = 230*vlan_index + 50;
                     vlan.setLocation(xoffset, vlanY);
                     box.add(vlan);
@@ -149,11 +292,13 @@ network.setLinkFlowInterval(100);
                             console.log('vlanLength',vlanLength)
                             console.log('space',space)
                             if(item.children != undefined && item.children.length) {
-                                var group1 = new twaver.Group(item.id); 
+                                var group1 = new twaver.Group(); 
                                 group1.setExpanded(false);
                                 group1.s('group.fill',true); 
                                 group1.setName(item.name)
                                 group1.setName2(item.name2)
+/*                                group1.setName('监测装置')
+                                group1.setName2('172.16.2822\n23333333')*/
                                 group1.setImage('sb3')
                                 group1.s('group.padding',20);
                                 group1.s('group.fill.color','#000');
@@ -166,7 +311,7 @@ network.setLinkFlowInterval(100);
                                 group1.setMovable(true);
                                 group1.setLocation(xoffset+(index*50), vlanY+150)
                                 box.add(group1);
-/*                                for(var i = 0; i<vlan_index+1; i++) {
+                                for(var i = 0; i<vlan_index+1; i++) {
                                     let vlan = getDataById(nodes.nodes[group_index].children[i].id)
                                     var link = new twaver.Link(group1,vlan);
                                     link.s('link.color',vlanColor[i])
@@ -175,7 +320,7 @@ network.setLinkFlowInterval(100);
                                     link.setStyle('link.to.xoffset',i*space+index*50);
                                     link.s('link.from.xoffset',i*space);
                                     box.add(link); 
-                                }*/
+                                }
                                 let groupXffset = xoffset+(index*50);
                                 let groupXffsetBegin = groupXffset-item.children.length*25 + 25;
                                 item.children.forEach((item, ind) => {
@@ -193,102 +338,106 @@ network.setLinkFlowInterval(100);
                                 node.setClient('rightClick',true)
                                 node.setLocation(xoffset+(index*50), vlanY+150);
                                 box.add(node);
-/*                                if(item.links != undefined && item.links.length) {
-                                    console.log('caonimei',item.links)
-                                    item.links.forEach((linkItem, linkIndex) => {
-                                        let vlan = getDataById(linkItem);
-                                        let linkColor = vlan.getClient('linkColor');
-                                        console.log(vlan.getClient('linkColor'))
-                                        var link = new twaver.Link(node,vlan);
-                                        link.s('link.color',linkColor)
-                                        link.setStyle('link.to.position','bottomleft.bottomleft');
-                                        link.setStyle('link.from.position','topleft.topleft');
-                                        link.setStyle('link.to.xoffset',linkIndex*space+index*50);
-                                        link.s('link.from.xoffset',linkIndex*space);
-                                        box.add(link); 
-                                    })
-                                }*/
+                                if(item.alarmType) {
+                                    node.getAlarmState().setNewAlarmCount(twaver.AlarmSeverity.ALARM1,item.alarmData);                                    
+                                }
+                                //node.getAlarmState().setNewAlarmCount(twaver.AlarmSeverity.MAJOR,index);
+                                /*addAlarm("alarm_"+item.id, node.getId(), twaver.AlarmSeverity.CRITICAL, box.getAlarmBox());*/
+                                for(var i = 0; i<vlan_index+1; i++) {
+                                    let vlan = getDataById(nodes.nodes[group_index].children[i].id)
+                                    var link = new twaver.Link(node,vlan);
+                                    link.s('link.color',vlanColor[i])
+                                    link.setStyle('link.to.position','bottomleft.bottomleft');
+                                    link.setStyle('link.from.position','topleft.topleft');
+                                    link.setStyle('link.to.xoffset',i*space+index*50);
+                                    link.s('link.from.xoffset',i*space);
+                                    box.add(link); 
+                                }
                             }
                         })
                     }
                 })
             }
         })
-    },
-    creatLinks: function() {
-        nodes.nodes.forEach((item, group_index) => {
-            let xoffset = 200 + group_index*800;
-            if(item.children.length) {
-                item.children.forEach((item, vlan_index) => {
-                    if(item.children != undefined && item.children.length) {
-                        item.children.forEach((item, index) => {
-                                let node = getDataById(item.id);
-                                if(item.links != undefined && item.links.length) {
-                                    let len = item.links.length;
-                                    let space = 15;
-                                    if(len > 1) {
-                                        space = 30/(len-1);
-                                    }
-                                    console.log('caonimei',item.links)
-                                    item.links.forEach((linkItem, linkIndex) => {
-                                        let vlan = getDataById(linkItem);
-                                        let linkColor = vlan.getClient('linkColor');
-                                        console.log(vlan.getClient('linkColor'))
-                                        var link = new twaver.Link(node,vlan);
-                                        link.s('link.color',linkColor)
-                                        link.setStyle('link.to.position','bottomleft.bottomleft');
-                                        link.setStyle('link.from.position','topleft.topleft');
-                                        link.setStyle('link.to.xoffset',linkIndex*space+index*50);
-                                        link.s('link.from.xoffset',linkIndex*space);
-                                        box.add(link); 
-                                    })
-                                }
-/*                            if(item.children != undefined && item.children.length) {
-                            }else {
-                                let node = getDataById(item.id);
-                                if(item.links != undefined && item.links.length) {
-                                    let len = item.links.length;
-                                    let space = 15;
-                                    if(len > 1) {
-                                        space = 30/(len-1);
-                                    }
-                                    console.log('caonimei',item.links)
-                                    item.links.forEach((linkItem, linkIndex) => {
-                                        let vlan = getDataById(linkItem);
-                                        let linkColor = vlan.getClient('linkColor');
-                                        console.log(vlan.getClient('linkColor'))
-                                        var link = new twaver.Link(node,vlan);
-                                        link.s('link.color',linkColor)
-                                        link.setStyle('link.to.position','bottomleft.bottomleft');
-                                        link.setStyle('link.from.position','topleft.topleft');
-                                        link.setStyle('link.to.xoffset',linkIndex*space+index*50);
-                                        link.s('link.from.xoffset',linkIndex*space);
-                                        box.add(link); 
-                                    })
-                                }
-                            }*/
-                        })
-                    }
-                })
-            }
-        })
+
     },
     //根据id查找图元
     getDataById: function(id) {
         var node = box.getDataById(id);
         return node;
-    }
+    },
+    initDialog : function(){
+        var div = document.createElement('div');
+        div.className = 'dialog';
+        div.innerHTML = 
+        "<table class='table1'>"+
+            "<tr><td class='td1'>IP：</td><td id='id' class='td2'></td></tr>"+
+            "<tr><td class='td1'>名称：</td><td id='name' class='td2'></td></tr>"+
+            "<tr><td class='td1'>CPU：</td><td id='cpu' class='td2'></td></tr>"+
+            "<tr><td class='td1'>内存：</td><td id='men' class='td2'></td></tr>"+
+        "</table>"+
+        "<div class='table2'>" +
+            "<div id='warning1' style='margin: 3px;'></div>"+
+            "<div id='warning2' style='margin: 3px;'></div>" +
+        "</div>";
+        document.body.appendChild(div);
+        div.style.display = 'none';
+        div.style.zIndex = 100;
+        return div;
+    },
 }
+//重写告警
+function getAlarmLabel() {
+    twaver.AlarmSeverity.CRITICAL = twaver.AlarmSeverity.add(500,'Critical','C',"#ff3333");
+    twaver.AlarmSeverity.MAJOR = twaver.AlarmSeverity.add(500,'MAJOR','C',"#e6e6e6");
+    twaver.AlarmSeverity.WARNING  = twaver.AlarmSeverity.add(200,'WARNING','C',"#66ff99");
+    twaver.AlarmSeverity.ALARM1 = twaver.AlarmSeverity.add(500,'ALARM1','C',"red");
+    network.getInnerColor = function (element) {
+       network.getAlarmLabel = function(element){
+           var severity = element.getAlarmState().getHighestNewAlarmSeverity();
+              if (severity) {
+                  var label = element.getAlarmState().getNewAlarmCount(severity);
+                  console.log('label',label)
+                  if (element.getAlarmState().hasLessSevereNewAlarms()) {
+                      label += "+";
+                  }else {
+                       label = label;
+                  }
+                  return label;
+               }
+               return null;
+       }
+    };
+}
+function addAlarm(alarmID, elementID, alarmSeverity, alarmBox) { 
+  var alarm = new twaver.Alarm(alarmID, elementID, alarmSeverity); 
+  alarmBox.add(alarm); 
+}
+
 function init() {
-    console.time("time")
     nodeMain.init()
-    console.timeEnd("time")
 }
 //获取元素byid
 function getDataById(id) {
     var node = box.getDataById(id);
     return node;
 }
+function initNetwork() {
+    document.body.appendChild(network.getView());
+    network.adjustBounds({ x: 0, y: 0, width: width, height: height });
+    network.setZoom(0.9,{x:0,y:0});
+    network.setToolTipEnabled(false);
+    network.setAsyncZoomAndViewRect(false);
+    network.setScrollBarVisible(0);//滚动条是否可见
+    twaver.Styles.setStyle('select.color', '#57ab9a');
+    twaver.Styles.setStyle('link.color','#000');
+    twaver.Styles.setStyle('link.width', 1);
+    twaver.Styles.setStyle('link.corner', 'none');
+
+    
+
+}
+
 function registerImage() {
     let image2 = new Image();
     image2.width = 600;
@@ -298,12 +447,12 @@ function registerImage() {
     let image3 = new Image();
     image3.width = 30;
     image3.height = 30;
-    image3.src = './css/img/computer_active.png';
+    image3.src = './css/img/sb1.png';
     twaver.Util.registerImage('sb1',image3,image3.width,image3.height);
     let image4 = new Image();
     image4.width = 30;
     image4.height = 30;
-    image4.src = './css/img/computer.png';
+    image4.src = './css/img/sb2.png';
     twaver.Util.registerImage('sb2',image4,image4.width,image4.height);
     let image5 = new Image();
     image5.width = 600;
@@ -546,5 +695,6 @@ function registerImage() {
 }
 function groupDisplay() {
     twaver.vector.Network.prototype.isDoubleClickToGroupExpand = function () {console.log('不能折叠') };
+    /*network.moveSelectedElements = function(){}*/
 }
 </script>
